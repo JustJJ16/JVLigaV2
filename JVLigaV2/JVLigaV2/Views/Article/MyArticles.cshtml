@@ -1,0 +1,27 @@
+﻿@model JVLiga.Models.Articles.ArticleIndexModel
+
+@{
+	ViewData["Title"] = "Moje články";
+}
+
+<h2>Moje články</h2>
+
+<p>
+	<a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+	<tbody>
+@foreach (var article in Model.Articles) {
+		<tr>
+			<td>
+				<h2><a style="color: dodgerblue" asp-action="Detail" asp-route-id="@article.Id">@Html.DisplayFor(modelItem => article.Title)</a></h2>
+				<p style="color: black">@Html.DisplayFor(modelItem => article.Desrciption)</p>
+			</td>
+			<td>
+				<a asp-action="Edit" asp-route-id="@article.Id">Edit</a> |
+				<a asp-action="Delete" asp-route-id="@article.Id">Delete</a>
+			</td>
+		</tr>
+}
+	</tbody>
+</table>

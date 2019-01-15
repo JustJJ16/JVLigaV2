@@ -1,0 +1,45 @@
+﻿@model JVLiga.Models.Match.SeasonIndexModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+<a asp-controller="Match" asp-action="Season" asp-route-full="true" asp-route-year=@ViewBag.Year>Zobrazit celou sezónu</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Datum
+            </th>
+            <th>
+                Domácí
+            </th>
+			<th>
+				Hosté
+			</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var match in Model.Matches) {
+        <tr>
+            <td>
+                @match.Date.ToString("dd. MM. yyy H:mm")
+            </td>
+            <td>
+                @match.HomeTeam
+            </td>
+            <td>
+                @match.GuestTeam
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@match.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@match.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@match.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

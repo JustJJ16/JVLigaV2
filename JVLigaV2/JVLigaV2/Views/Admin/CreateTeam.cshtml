@@ -1,0 +1,33 @@
+﻿@model JVLiga.Models.Admin.TeamIndexModel
+
+@{
+	ViewData["Title"] = "Vytvoření týmu";
+}
+
+<h2>Přidat tým</h2>
+<hr />
+@if (ViewBag.TeamCreated != "")
+{
+	<h5 style="color: green">@ViewBag.TeamCreated</h5>
+}
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="CreateTeam">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Team.Name" class="control-label"></label>
+				<input asp-for="Team.Name" class="form-control" />
+				<span asp-validation-for="Team.Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="HallId" class="control-label"></label>
+				<select asp-for="HallId" asp-items="@ViewBag.Halls" class="form-control"></select>
+				<span asp-validation-for="HallId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-default" />
+			</div>
+		</form>
+	</div>
+</div>
+

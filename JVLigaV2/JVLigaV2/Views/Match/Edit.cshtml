@@ -1,0 +1,81 @@
+﻿@model JVLiga.Models.Match.MatchEditModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+<hr />
+<div class="row">
+	<div class="col-lg-4">
+		<p>Domácí: </p><h3><b>@Model.Match.HomeTeam</b></h3>
+		<p>Hosté: </p><h3><b>@Model.Match.GuestTeam</b></h3>
+		<p>Datum:</p><h3><b>@Model.Match.Date</b></h3>
+	</div>
+	<div class="col-md-4">
+		<div class="row">
+			<div class="column">
+				<form asp-action="Edit">
+					<input type="hidden" asp-for="Match.Id" />
+					<div class="col-md-4">
+						<div class="form-group">
+							<label asp-for="Result1.Set" class="control-label"></label>
+							<input asp-for="Result1.Set" class="form-control" />
+							<span asp-validation-for="Result1.Set" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="Result2.Set" class="form-control" />
+							<span asp-validation-for="Result2.Set" class="text-danger"></span>
+						</div>
+
+						<div class="form-group">
+							<input asp-for="Result3.Set" class="form-control" />
+							<span asp-validation-for="Result3.Set" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="col-md-4">
+
+						<div class="form-group">
+							<label asp-for="Result1.HomeTeamPoints" class="control-label"></label>
+							<input asp-for="Result1.HomeTeamPoints" class="form-control" />
+							<span asp-validation-for="Result1.HomeTeamPoints" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="Result2.HomeTeamPoints" class="form-control" />
+							<span asp-validation-for="Result2.HomeTeamPoints" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="Result3.HomeTeamPoints" class="form-control" />
+							<span asp-validation-for="Result3.HomeTeamPoints" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="col-md-4">
+
+						<div class="form-group">
+							<label asp-for="Result1.GuestTeamPoints" class="control-label"></label>
+							<input asp-for="Result1.GuestTeamPoints" class="form-control" />
+							<span asp-validation-for="Result1.GuestTeamPoints" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="Result2.GuestTeamPoints" class="form-control" />
+							<span asp-validation-for="Result2.GuestTeamPoints" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="Result3.GuestTeamPoints" class="form-control" />
+							<span asp-validation-for="Result3.GuestTeamPoints" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<input type="submit" value="Save" class="btn btn-default" />
+						</div>
+						@if (ViewBag.Succeed != null)
+						{
+							<h5 style="color: green">@ViewBag.Succeed</h5>
+						}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
