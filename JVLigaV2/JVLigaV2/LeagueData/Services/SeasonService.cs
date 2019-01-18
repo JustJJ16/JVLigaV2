@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using JVLigaV2.LeagueData;
-using LeagueData;
 using LeagueData.Models;
 using Nager.Date;
 
-namespace LeagueServices
+namespace JVLigaV2.LeagueData.Services
 {
 	public class SeasonService
 	{

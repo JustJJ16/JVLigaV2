@@ -6,7 +6,6 @@ using JVLigaV2.LeagueData;
 using JVLigaV2.LeagueData.Services;
 using LeagueData;
 using LeagueData.Models;
-using LeagueServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -23,41 +23,39 @@
 	</environment>
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" asp-controller="Home" asp-action="Index">
 				<img src="~/images/volleyball.png" width="30" height="30" alt="">
 			</a>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+			<div class="navbar-collapse collapse" id="navbarSupportedContent">
+				<ul class="mr-auto navbar-nav">
+					<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
 					@await Component.InvokeAsync("SeasonMenu")
-					<li><a asp-area="" asp-controller="Article" asp-action="Index">Články</a></li>
+					<li><a class="nav-link" asp-area="" asp-controller="Article" asp-action="Index">Články</a></li>
 					@if (User.IsInRole("Admin") || User.IsInRole("Editor"))
 					{
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Redakce<span class="caret"></span></a>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdown">Redakce</a>
 							<ul class="dropdown-menu">
-								<li><a asp-area="" asp-controller="Article" asp-action="Create">Vytvořit článek</a></li>
-								<li><a asp-area="" asp-controller="Article" asp-action="MyArticles">Moje články</a></li>
+								<li><a class="dropdown-item" asp-area="" asp-controller="Article" asp-action="Create">Vytvořit článek</a></li>
+								<li><a class="dropdown-item" asp-area="" asp-controller="Article" asp-action="MyArticles">Moje články</a></li>
 							</ul>
 						</li>
 					}
 					@if (User.IsInRole("Admin"))
 					{
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a asp-area="" asp-controller="Admin" asp-action="CreateHall">Přidat halu</a></li>
-							<li><a asp-area="" asp-controller="Admin" asp-action="CreateTeam">Přidat tým</a></li>
-							<li><a asp-area="" asp-controller="Admin" asp-action="GenerateSeason">Vytvořit sezónu</a></li>
-						</ul>
-					</li>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdown">Admin</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="CreateHall">Přidat halu</a></li>
+								<li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="CreateTeam">Přidat tým</a></li>
+								<li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="GenerateSeason">Vytvořit sezónu</a></li>
+							</ul>
+						</li>
 					}
 				</ul>
 				<partial name="_LoginPartial" />
 			</div>
-		</div>
 	</nav>
 	<partial name="_CookieConsentPartial" />
 	<div class="container">

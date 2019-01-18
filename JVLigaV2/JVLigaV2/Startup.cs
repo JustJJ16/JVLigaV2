@@ -1,5 +1,6 @@
 ﻿using System;
 using JVLigaV2.LeagueData;
+using JVLigaV2.LeagueData.Services;
 using LeagueData;
 using LeagueData.Models;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,13 @@ namespace JVLigaV2
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<LeagueContext>()
 				 .AddDefaultTokenProviders();
+
+			services.AddScoped<ArticleService>();
+			services.AddScoped<HallService>();
+			services.AddScoped<MatchService>();
+			services.AddScoped<ResultService>();
+			services.AddScoped<SeasonService>();
+			services.AddScoped<TeamService>();
 
 			services.Configure<IdentityOptions>(options =>
 			{

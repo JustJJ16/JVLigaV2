@@ -1,12 +1,12 @@
 ﻿
 @if (Model != null)
 {
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sezóny<span class="caret"></span></a>
+<li class="nav-item dropdown">
+	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdown">Sezóny</a>
 	<ul class="dropdown-menu">
 		@foreach (var season in Model)
 		{
-			<li>
+			<li class="dropdown-item">
 				<a asp-area="" asp-controller="Match" asp-action="Season" asp-route-year="@season">@season</a>
 			</li>
 		}
