@@ -40,6 +40,7 @@ namespace JVLigaV2.Controllers
 			{
 				Articles = listingResult
 			};
+			ViewData["Title"] = "Domů";
 			return View(model);
 		}
 
