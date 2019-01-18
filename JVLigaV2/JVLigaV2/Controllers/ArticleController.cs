@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using JVLiga.Models.Articles;
 using JVLigaV2.LeagueData;
 using JVLigaV2.LeagueData.Services;
+using JVLigaV2.Models.Articles;
 using LeagueData;
 using LeagueData.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -68,7 +72,7 @@ namespace JVLigaV2.Controllers
 			return View();
 		}
 		[HttpPost]
-		public async Task<IActionResult> Create(Article article)
+		public async Task<IActionResult> Create(ArticleCreateModel model, List<IFormFile> files)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -77,12 +81,34 @@ namespace JVLigaV2.Controllers
 
 			if (_singInManager.IsSignedIn(User))
 			{
-				article.User = await _userManager.GetUserAsync(User);
+				model.User = await _userManager.GetUserAsync(User);
 			}
 
-			article.PublishedDate = DateTime.Now;
+			model.PublishedDate = DateTime.Now;
 
-			_db.Add(article);
+			long size = files.Sum(f => f.Length);
+
+			// full path to file in temp location
+			var filePath = Path.GetTempFileName();
+
+			foreach (var formFile in files)
+			{
+				if (formFile.Length > 0)
+				{
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						await formFile.CopyToAsync(stream);
+					}
+				}
+			}
+
+			using (var memoryStream = new MemoryStream())
+			{
+				await model.ArticleImage.CopyToAsync(memoryStream);
+				// model.AvatarImage = memoryStream.ToArray();
+			}
+
+			//_db.Add(3);
 
 			try
 			{

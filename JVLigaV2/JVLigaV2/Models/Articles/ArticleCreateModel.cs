@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LeagueData.Models;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
 
-namespace LeagueData.Models
+namespace JVLigaV2.Models.Articles
 {
-	public class Article
+	public class ArticleCreateModel
 	{
-		[Key]
-		public int Id { get; set; }
 		[Required]
 		[MaxLength(100)]
 		public string Title { get; set; }
@@ -20,13 +19,12 @@ namespace LeagueData.Models
 		[MaxLength(20000)]
 		public string Body { get; set; }
 		[Required]
-		public byte[] ArticleImage { get; set; }
+		public IFormFile ArticleImage { get; set; }
 		[Required]
 		public DateTime PublishedDate { get; set; }
 		public Match Match { get; set; }
 		public Team Team { get; set; }
 		public Player Player { get; set; }
 		public ApplicationUser User { get; set; }
-
 	}
 }

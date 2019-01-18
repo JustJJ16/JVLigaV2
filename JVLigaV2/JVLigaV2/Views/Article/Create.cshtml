@@ -1,4 +1,4 @@
-﻿@model LeagueData.Models.Article
+﻿@model JVLigaV2.Models.Articles.ArticleCreateModel
 
 @{
 	ViewData["Title"] = "Create";
@@ -26,6 +26,10 @@
 				<label asp-for="Body" class="control-label"></label>
 				<textarea name="Body" id="Body" asp-for="Body" class="form-control"></textarea>
 				<span asp-validation-for="Body" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+					<p>Obrázky k článku:</p>
+					<input type="file" name="files" multiple />
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Create" class="btn btn-default" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace JVLiga.Models.Articles
 {
@@ -7,5 +8,6 @@ namespace JVLiga.Models.Articles
 		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Desrciption { get; set; }
+		public IFormFile ArticleImage { get; set; }
 	}
 }
