@@ -8,6 +8,6 @@ namespace JVLiga.Models.Articles
 		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Desrciption { get; set; }
-		public IFormFile ArticleImage { get; set; }
+		public string ImagePath { get; set; }
 	}
 }

@@ -27,7 +27,7 @@
 			<a class="navbar-brand" asp-controller="Home" asp-action="Index">
 				<img src="~/images/volleyball.png" width="30" height="30" alt="">
 			</a>
-			<div class="navbar-collapse collapse" id="navbarSupportedContent">
+			<div class="navbar-collapse collapse container" id="navbarSupportedContent">
 				<ul class="mr-auto navbar-nav">
 					<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
 					@await Component.InvokeAsync("SeasonMenu")
@@ -57,13 +57,12 @@
 				<partial name="_LoginPartial" />
 			</div>
 	</nav>
-	<partial name="_CookieConsentPartial" />
 	<div class="container">
 		@RenderBody()
 		<hr />
 		<footer>
 			<p>&copy; 2018 - JVLiga</p>
-			<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+			@*<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>*@
 		</footer>
 	</div>
 	<environment include="Development">

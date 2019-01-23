@@ -33,7 +33,8 @@ namespace JVLigaV2.Controllers
 				{
 					Id = result.Id,
 					Title = result.Title,
-					Desrciption = result.Description
+					Desrciption = result.Description,
+					ImagePath = result.ImagePath
 				});
 
 			var model = new HomeIndexModel()

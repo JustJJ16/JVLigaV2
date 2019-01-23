@@ -10,4 +10,9 @@
     <PackageReference Include="Nager.Date" Version="1.24.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+    <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
 </Project>

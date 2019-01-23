@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -20,7 +21,7 @@ namespace LeagueData.Models
 		[MaxLength(20000)]
 		public string Body { get; set; }
 		[Required]
-		public byte[] ArticleImage { get; set; }
+		public string ImagePath { get; set; }
 		[Required]
 		public DateTime PublishedDate { get; set; }
 		public Match Match { get; set; }
