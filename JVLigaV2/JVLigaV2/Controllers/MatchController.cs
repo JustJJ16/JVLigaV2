@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using JVLiga.Models.Match;
 using JVLigaV2.LeagueData;
 using JVLigaV2.LeagueData.Services;
+using JVLigaV2.Models.Match;
 using LeagueData;
 using LeagueData.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace JVLigaV2.Controllers
 {
@@ -34,12 +37,6 @@ namespace JVLigaV2.Controllers
 			if (full)
 			{
 				var matches = _match.GetMatchesBySeason(year);
-				foreach (var match in matches)
-				{
-
-					_db.Entry(match).Reference(m => m.HomeTeam).Load();
-					_db.Entry(match).Reference(m => m.GuestTeam).Load();
-				}
 				var listingResult = matches
 					.Select(result => new MatchIndexListingModel
 					{
@@ -90,22 +87,19 @@ namespace JVLigaV2.Controllers
 		public IActionResult Edit(int id)
 		{
 			var match = _match.GetById(id);
-			_db.Entry(match).Reference(m => m.HomeTeam).Load();
-			_db.Entry(match).Reference(m => m.GuestTeam).Load();
 			var strMatch = new MatchIndexListingModel()
 			{
 				Date = match.Date,
-				HomeTeam = _team.GetById(match.HomeTeam.Id).Name,
-				GuestTeam = _team.GetById(match.GuestTeam.Id).Name,
+				HomeTeam = match.HomeTeam.Name,
+				GuestTeam = match.GuestTeam.Name,
 				Id = match.Id
 			};
 			MatchEditModel model = new MatchEditModel()
 			{
-				Match = strMatch,
+				MatchWithTeams = strMatch,
+				Match = match,
 				Title = strMatch.HomeTeam + " - " + strMatch.GuestTeam + ", " + strMatch.Date,
-				Result1 = new Result() { Set = 1},
-				Result2 = new Result() { Set = 2},
-				Result3 = new Result() { Set = 3}
+				Results = new[] { new Result(){Set = 1}, new Result() { Set = 2}, new Result() { Set = 3} },
 
 			};
 			return View(model);
@@ -114,9 +108,30 @@ namespace JVLigaV2.Controllers
 		[HttpPost]
 		public IActionResult Edit(MatchEditModel model)
 		{
-			_result.Add(model.Result1);
-			_result.Add(model.Result2);
-			_result.Add(model.Result3);
+			int homeP = 0;
+			int guestP = 0;
+			Match match = _match.GetById(model.Match.Id);
+			foreach (Result result in model.Results)
+			{
+				if (result.GuestTeamPoints > result.HomeTeamPoints)
+					guestP++;
+				if (result.GuestTeamPoints < result.HomeTeamPoints)
+					homeP++;
+
+				result.Match = match;
+
+				_result.Add(result);
+			}
+			match.Winner = homeP > guestP;
+			try
+			{
+				_db.SaveChanges();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 
 			ViewBag.Succeed = "Výsledky zadány.";
 

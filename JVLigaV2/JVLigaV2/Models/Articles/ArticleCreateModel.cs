@@ -23,7 +23,7 @@ namespace JVLigaV2.Models.Articles
 		public IFormFile ArticleImage { get; set; }
 		[Required]
 		public DateTime PublishedDate { get; set; }
-		public Match Match { get; set; }
+		public global::LeagueData.Models.Match Match { get; set; }
 		public Team Team { get; set; }
 		public Player Player { get; set; }
 		public ApplicationUser User { get; set; }

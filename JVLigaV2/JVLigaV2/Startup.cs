@@ -36,8 +36,7 @@ namespace JVLigaV2
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			services.AddDbContext<LeagueContext>(options
-				=> options.UseSqlServer(Configuration.GetConnectionString("LocalConnection")));
+			services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LeagueConnection")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<LeagueContext>()

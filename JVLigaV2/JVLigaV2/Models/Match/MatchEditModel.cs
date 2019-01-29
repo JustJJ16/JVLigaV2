@@ -1,18 +1,13 @@
-﻿using LeagueData.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using JVLiga.Models.Match;
+using LeagueData.Models;
 
-namespace JVLiga.Models.Match
+namespace JVLigaV2.Models.Match
 {
 	public class MatchEditModel
 	{
-		public MatchIndexListingModel Match { get; set; }
-		public Result Result1 { get; set; }
-		public Result Result2 { get; set; }
-		public Result Result3 { get; set; }
+		public MatchIndexListingModel MatchWithTeams { get; set; }
+		public global::LeagueData.Models.Match Match { get; set; }
+		public Result[] Results { get; set; }
 		public string Title { get; set; }
 	}
 }

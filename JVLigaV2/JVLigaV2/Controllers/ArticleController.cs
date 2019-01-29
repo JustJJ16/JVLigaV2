@@ -93,7 +93,7 @@ namespace JVLigaV2.Controllers
 			{
 				Title = model.Title,
 				Description = model.Description,
-				Body = model.Description,
+				Body = model.Body,
 				PublishedDate = model.PublishedDate,
 				User = model.User
 			};
@@ -105,7 +105,7 @@ namespace JVLigaV2.Controllers
 				var filePath = Path.Combine(uploads, uniqueFileName);
 				model.ArticleImage.CopyTo(new FileStream(filePath, FileMode.Create));
 
-				article.ImagePath = $@"~\Uploads\{uniqueFileName}";
+				article.ImagePath = $@"\Uploads\{uniqueFileName}";
 
 				_articles.Add(article);
 			}
