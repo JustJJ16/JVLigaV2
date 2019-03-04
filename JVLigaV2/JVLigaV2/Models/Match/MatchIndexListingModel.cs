@@ -15,5 +15,7 @@ namespace JVLiga.Models.Match
 		public string GuestTeam { get; set; }
 		[Display(Name = "Datum")]
 		public DateTime Date { get; set; }
+
+		public bool Winner { get; set; }
 	}
 }

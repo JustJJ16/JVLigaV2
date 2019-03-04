@@ -139,7 +139,7 @@ namespace JVLigaV2.LeagueData.Services
 			{
 				years.Add(match.Date.Year);
 			}
-			return years.Distinct();
+			return years.Distinct().OrderBy(y => y);
 		}
 
 	}

@@ -21,12 +21,5 @@ namespace JVLigaV2.LeagueData.Services
 			return _context.Teams
 			.FirstOrDefault(t => t.Id == id);
 		}
-
-		/*public IEnumerable<Team> GetStandingsForCurrYear()
-		{
-			List<Result> results =  _context.Results.Include(r => r.Match)
-				.Where(r => r.Match.Date.Year == DateTime.Now.Year).ToList();
-
-		}*/
 	}
 }

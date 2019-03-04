@@ -3,13 +3,11 @@
 {
 <li class="nav-item dropdown">
 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdown">Sezóny</a>
-	<ul class="dropdown-menu">
+	<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		@foreach (var season in Model)
 		{
-			<li class="dropdown-item">
-				<a asp-area="" asp-controller="Match" asp-action="Season" asp-route-year="@season">@season</a>
-			</li>
+			<a class="dropdown-item" asp-area="" asp-controller="Match" asp-action="Season" asp-route-year="@season">@season</a>
 		}
-	</ul>
+		</div>
 </li>
 }

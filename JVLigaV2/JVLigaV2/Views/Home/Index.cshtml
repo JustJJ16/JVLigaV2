@@ -1,56 +1,58 @@
 ﻿@model JVLiga.Models.Home.HomeIndexModel
 
-
-@if (!(Model.Articles.Count() < 3))
-{
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="6000">
-	<ol class="carousel-indicators">
-		<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-		<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-		<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-	</ol>
-	<div class="carousel-inner">
-		<div class="carousel-item active">
-			<div class="container" style="display:block;width:100%;height:350px;overflow:hidden;padding:0;">
-				<img src="@Html.Raw(Model.Articles.ToArray()[0].ImagePath)" alt="ASP.NET" class="img-fluid mx-auto d-block" />
+<div class="row">
+	<div class="col-lg-9">
+		@if (!(Model.Articles.Count() < 3))
+		{
+			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="6000">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				</ol>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="container" style="display:block;width:100%;height:350px;overflow:hidden;padding:0;">
+							<img src="@Html.Raw(Model.Articles.ToArray()[0].ImagePath)" alt="ASP.NET" class="img-fluid mx-auto d-block" />
+						</div>
+						<div class="carousel-caption" role="option">
+							<p>
+								@Model.Articles.ToArray()[0].Title
+							</p>
+							<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[0].Id">
+								Zobrazit článek
+							</a>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="container" style="display:block;width:100%;height:350px;overflow:hidden;padding:0;">
+							<img src=@Html.Raw(Model.Articles.ToArray()[1].ImagePath) alt="Visual Studio" class="img-fluid mx-auto d-block" />
+						</div>
+						<div class="carousel-caption" role="option">
+							<p>
+								@Model.Articles.ToArray()[1].Title
+							</p>
+							<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[1].Id">
+								Zobrazit článek
+							</a>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="container" style="display:block;width:100%;height:350px;overflow:hidden;padding:0;">
+							<img src=@Html.Raw(Model.Articles.ToArray()[2].ImagePath) alt="Microsoft Azure" class="img-fluid mx-auto d-block" />
+						</div>
+						<div class="carousel-caption" role="option">
+							<p>
+								@Model.Articles.ToArray()[2].Title
+							</p>
+							<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[2].Id">
+								Zobrazit článek
+							</a>
+						</div>
+					</div>
 				</div>
-				<div class="carousel-caption" role="option">
-					<p>
-						@Model.Articles.ToArray()[0].Title
-					</p>
-						<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[0].Id">
-							Zobrazit článek
-						</a>
-</div>
 			</div>
-		<div class="carousel-item">
-			<div class="container" style="display:block;width:100%;height:350px;overflow:hidden;padding:0;">
-				<img src=@Html.Raw(Model.Articles.ToArray()[1].ImagePath) alt="Visual Studio" class="img-fluid mx-auto d-block" />
-			</div>
-				<div class="carousel-caption" role="option">
-					<p>
-						@Model.Articles.ToArray()[1].Title
-					</p>
-					<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[1].Id">
-						Zobrazit článek
-					</a>
-				</div>
-			</div>
-		<div class="carousel-item">
-			<div class="container" style="display:block;width:100%;height:350px;overflow:hidden;padding:0;">
-				<img src=@Html.Raw(Model.Articles.ToArray()[2].ImagePath) alt="Microsoft Azure" class="img-fluid mx-auto d-block" />
-			</div>
-			<div class="carousel-caption" role="option">
-				<p>
-					@Model.Articles.ToArray()[2].Title
-				</p>
-				<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[2].Id">
-					Zobrazit článek
-				</a>
-			</div>
-		</div>
+		}
 	</div>
+	@await Component.InvokeAsync("Standings")
 </div>
-}
-
-

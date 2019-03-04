@@ -28,9 +28,13 @@ namespace JVLigaV2.LeagueData.Services
 
 		public IEnumerable<Match> GetTopMatchesBySeason(int year, int num)
 		{
-			return _context.Matches.Where(m => m.Date.Year == year)
+			return _context.Matches
+				.OrderBy(m => m.Date)
+				.Where(m => m.Date.Year == year)
+				.Where(m => m.Date >= DateTime.Now)
 				.Take(num)
-				.Where(m => m.Date >= DateTime.Now);
+				.Include(m => m.GuestTeam)
+				.Include(m => m.HomeTeam);
 		}
 
 		public IEnumerable<Match> GetMatchesBySeason(int year)

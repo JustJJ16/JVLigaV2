@@ -43,7 +43,8 @@ namespace JVLigaV2.Controllers
 						Id = result.Id,
 						HomeTeam = _team.GetById(result.HomeTeam.Id).Name,
 						GuestTeam = _team.GetById(result.GuestTeam.Id).Name,
-						Date = result.Date
+						Date = result.Date,
+						Winner = result.Winner
 
 					});
 				model = new SeasonIndexModel()
@@ -57,19 +58,14 @@ namespace JVLigaV2.Controllers
 			else
 			{
 				var matches = _match.GetTopMatchesBySeason(year, 10);
-				foreach (var match in matches)
-				{
-
-					_db.Entry(match).Reference(m => m.HomeTeam).Load();
-					_db.Entry(match).Reference(m => m.GuestTeam).Load();
-				}
 				var listingResult = matches
 					.Select(result => new MatchIndexListingModel
 					{
 						Id = result.Id,
 						HomeTeam = _team.GetById(result.HomeTeam.Id).Name,
 						GuestTeam = _team.GetById(result.GuestTeam.Id).Name,
-						Date = result.Date
+						Date = result.Date,
+						Winner = result.Winner
 
 					});
 				model = new SeasonIndexModel()
@@ -132,6 +128,15 @@ namespace JVLigaV2.Controllers
 				Console.WriteLine(e);
 				throw;
 			}
+			var strMatch = new MatchIndexListingModel()
+			{
+				Date = match.Date,
+				HomeTeam = match.HomeTeam.Name,
+				GuestTeam = match.GuestTeam.Name,
+				Id = match.Id
+			};
+			model.MatchWithTeams = strMatch;
+			model.Title = strMatch.HomeTeam + " - " + strMatch.GuestTeam + ", " + strMatch.Date;
 
 			ViewBag.Succeed = "Výsledky zadány.";
 

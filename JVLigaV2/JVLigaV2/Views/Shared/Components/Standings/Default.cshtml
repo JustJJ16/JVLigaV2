@@ -1,0 +1,30 @@
+﻿@model JVLigaV2.Models.Match.StandingsModel
+
+@if (Model != null)
+{
+	<div class="col-lg-3">
+		<table class="table">
+			<thead class="thead-dark">
+			<tr>
+				<th scope="col">Pořadí</th>
+				<th scope="col">Tým</th>
+				<th scope="col">Výhry</th>
+				<th scope="col">Prohry</th>
+				<th scope="col">Zápasy</th>
+			</tr>
+			</thead>
+			<tbody>
+			@foreach (var standing in Model.StandingListingModel)
+			{
+				<tr>
+					<th scope="row">@standing.Order</th>
+					<td>@standing.TeamName</td>
+					<td>@standing.Wins</td>
+					<td>@standing.Losses</td>
+					<td>@standing.NumOfMatches</td>
+				</tr>
+			}
+			</tbody>
+		</table>
+	</div>
+}
