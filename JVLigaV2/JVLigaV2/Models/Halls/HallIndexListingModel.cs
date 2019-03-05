@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace JVLiga.Models.Halls
+﻿namespace JVLigaV2.Models.Halls
 {
 	public class HallIndexListingModel
 	{

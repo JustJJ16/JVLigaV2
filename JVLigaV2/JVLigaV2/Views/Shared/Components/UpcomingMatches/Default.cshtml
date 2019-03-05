@@ -1,35 +1,28 @@
 ﻿@model JVLigaV2.Models.Match.SeasonIndexModel
 
-@{
-	ViewData["Title"] = Model.Title;
-}
-
-<h2>@Model.Title</h2>
-<a asp-controller="Match" asp-action="Season" asp-route-full="true" asp-route-year=@ViewBag.Year>Zobrazit celou sezónu</a>
-
 <table class="table">
 	<thead>
-		<tr>
-			<th>
-				Datum
-			</th>
-			<th>
-				Domácí
-			</th>
-			<th>
-				Hosté
-			</th>
-			<th></th>
-		</tr>
+	<tr>
+		<th>
+			Datum
+		</th>
+		<th>
+			Domácí
+		</th>
+		<th>
+			Hosté
+		</th>
+		<th></th>
+	</tr>
 	</thead>
 	<tbody>
-@foreach (var match in Model.Matches) {
+	@foreach (var match in Model.Matches) {
 		if (match.Date < DateTime.Now.AddMinutes(15))
-		 {
-		<tr>
-			<td>
-				@match.Date.ToString("dd.MM.yyy H:mm")
-			</td>
+		{
+			<tr>
+				<td>
+					@match.Date.ToString("dd.MM.yyy H:mm")
+				</td>
 				<td style=" color: @(match.Winner ? "green" : "black")">
 
 					@match.HomeTeam
@@ -37,11 +30,11 @@
 				<td style=" color: @(!match.Winner ? "green" : "black")">
 					@match.GuestTeam
 				</td>
-			<td>
-				<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a> |
-				<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
-			</td>
-		</tr>
+				<td>
+					<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a> |
+					<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
+				</td>
+			</tr>
 		}
 		else
 		{
@@ -61,6 +54,7 @@
 				</td>
 			</tr>
 		}
-}
+	}
 	</tbody>
 </table>
+

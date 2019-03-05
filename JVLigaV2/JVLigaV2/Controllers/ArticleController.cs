@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using JVLiga.Models.Articles;
 using JVLigaV2.LeagueData;
 using JVLigaV2.LeagueData.Services;
 using JVLigaV2.Models.Articles;

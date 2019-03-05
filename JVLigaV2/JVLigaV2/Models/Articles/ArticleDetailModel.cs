@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace JVLiga.Models.Articles
+﻿namespace JVLigaV2.Models.Articles
 {
 	public class ArticleDetailModel
 	{

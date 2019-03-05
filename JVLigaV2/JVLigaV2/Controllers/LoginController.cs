@@ -1,4 +1,4 @@
-﻿using JVLiga.Models.Account;
+﻿using JVLigaV2.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

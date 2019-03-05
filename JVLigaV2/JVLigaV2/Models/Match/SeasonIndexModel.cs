@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace JVLiga.Models.Match
+namespace JVLigaV2.Models.Match
 {
 	public class SeasonIndexModel
 	{

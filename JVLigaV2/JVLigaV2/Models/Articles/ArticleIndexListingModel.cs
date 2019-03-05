@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-
-namespace JVLiga.Models.Articles
+﻿namespace JVLigaV2.Models.Articles
 {
 	public class ArticleIndexListingModel
 	{

@@ -1,12 +1,8 @@
-﻿using LeagueData.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using LeagueData.Models;
 
-namespace JVLiga.Models.Admin
+namespace JVLigaV2.Models.Admin
 {
 	public class TeamIndexModel
 	{

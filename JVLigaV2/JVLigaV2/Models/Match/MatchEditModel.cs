@@ -1,5 +1,4 @@
-﻿using JVLiga.Models.Match;
-using LeagueData.Models;
+﻿using LeagueData.Models;
 
 namespace JVLigaV2.Models.Match
 {

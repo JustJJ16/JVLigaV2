@@ -1,10 +1,7 @@
-﻿using JVLiga.Models.Articles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using JVLigaV2.Models.Articles;
 
-namespace JVLiga.Models.Home
+namespace JVLigaV2.Models.Home
 {
 	public class HomeIndexModel
 	{

@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Linq;
 using JVLiga.Models;
-using JVLiga.Models.Articles;
-using JVLiga.Models.Home;
 using JVLigaV2.LeagueData.Services;
+using JVLigaV2.Models.Articles;
+using JVLigaV2.Models.Home;
 using LeagueData;
 using Microsoft.AspNetCore.Mvc;
 

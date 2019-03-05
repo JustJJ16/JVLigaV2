@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace JVLiga.Models.Halls
+﻿namespace JVLigaV2.Models.Halls
 {
 	public class HallDetailModel
 	{

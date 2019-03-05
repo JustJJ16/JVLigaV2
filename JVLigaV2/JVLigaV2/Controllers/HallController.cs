@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using JVLiga.Models.Halls;
 using JVLigaV2.LeagueData;
 using JVLigaV2.LeagueData.Services;
+using JVLigaV2.Models.Halls;
 using LeagueData;
 using LeagueData.Models;
 using Microsoft.AspNetCore.Mvc;

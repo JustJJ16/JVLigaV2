@@ -1,7 +1,6 @@
-﻿using LeagueData.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace JVLiga.Models.Articles
+namespace JVLigaV2.Models.Articles
 {
 	public class ArticleIndexModel
 	{
