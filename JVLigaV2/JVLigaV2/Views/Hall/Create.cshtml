@@ -1,4 +1,5 @@
-﻿@model LeagueData.Models.Hall
+﻿@using JVLigaV2.LeagueData.Models
+@model JVLigaV2.LeagueData.Models.Hall
 
 @{
     ViewData["Title"] = "Create";
@@ -13,12 +14,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" ></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-secondary btn-sm" />
             </div>
         </form>
     </div>

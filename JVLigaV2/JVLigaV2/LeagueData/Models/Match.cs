@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace LeagueData.Models
+namespace JVLigaV2.LeagueData.Models
 {
 	public class Match
 	{

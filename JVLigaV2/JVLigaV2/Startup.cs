@@ -1,8 +1,8 @@
 ﻿using System;
 using JVLigaV2.LeagueData;
+using JVLigaV2.LeagueData.Models;
 using JVLigaV2.LeagueData.Services;
-using LeagueData;
-using LeagueData.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

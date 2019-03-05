@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace LeagueData.Models
+namespace JVLigaV2.LeagueData.Models
 {
 	public class Article
 	{

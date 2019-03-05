@@ -22,7 +22,6 @@ namespace JVLigaV2.Components
 
 		public IViewComponentResult Invoke()
 		{
-			SeasonIndexModel model;
 			int currYear = DateTime.Now.Year;
 			var matches = _match.GetTopMatchesBySeason(currYear, 10);
 			var listingResult = matches
@@ -35,7 +34,7 @@ namespace JVLigaV2.Components
 					Winner = result.Winner
 
 				});
-			model = new SeasonIndexModel()
+			SeasonIndexModel model = new SeasonIndexModel()
 			{
 				Matches = listingResult,
 				Title = "Nadcházejících 10 zápasů pro sezónu " + currYear

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using JVLigaV2.LeagueData;
+using JVLigaV2.LeagueData.Models;
 using JVLigaV2.LeagueData.Services;
 using JVLigaV2.Models.Match;
-using LeagueData;
-using LeagueData.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

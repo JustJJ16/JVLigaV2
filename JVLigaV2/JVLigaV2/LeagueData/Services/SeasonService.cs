@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using LeagueData.Models;
+using JVLigaV2.LeagueData.Models;
 using Nager.Date;
 
 namespace JVLigaV2.LeagueData.Services

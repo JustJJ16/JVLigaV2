@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JVLigaV2.LeagueData.Models;
 using JVLigaV2.LeagueData.Services;
 using JVLigaV2.Models.Match;
-using LeagueData.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JVLigaV2.Components

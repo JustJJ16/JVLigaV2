@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using LeagueData;
-using LeagueData.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using JVLigaV2.LeagueData.Models;
 
 namespace JVLigaV2.LeagueData.Services
 {

@@ -1,7 +1,12 @@
-﻿@model JVLigaV2.Models.Match.SeasonIndexModel
+﻿@using JVLigaV2.LeagueData.Models
+@using Microsoft.AspNetCore.Identity
+@model JVLigaV2.Models.Match.SeasonIndexModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
 
-<table class="table">
-	<thead>
+<table class="table table-light table-hover">
+	<thead class="thead-dark">
 	<tr>
 		<th>
 			Datum
@@ -16,45 +21,58 @@
 	</tr>
 	</thead>
 	<tbody>
-	@foreach (var match in Model.Matches) {
-		if (match.Date < DateTime.Now.AddMinutes(15))
-		{
-			<tr>
-				<td>
-					@match.Date.ToString("dd.MM.yyy H:mm")
-				</td>
-				<td style=" color: @(match.Winner ? "green" : "black")">
+	@foreach (var match in Model.Matches)
+	{
+			if (match.Date < DateTime.Now.AddMinutes(15))
+			{
+				<tr>
+						<td>
+							@match.Date.ToString("dd.MM.yyy H:mm")
+						</td>
+						<td style="color: @(match.Winner ? "green" : "black")">
 
-					@match.HomeTeam
-				</td>
-				<td style=" color: @(!match.Winner ? "green" : "black")">
-					@match.GuestTeam
-				</td>
-				<td>
-					<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a> |
-					<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
-				</td>
-			</tr>
-		}
-		else
-		{
-			<tr>
-				<td>
-					@match.Date.ToString("dd. MM. yyy H:mm")
-				</td>
-				<td>
-					@match.HomeTeam
-				</td>
-				<td>
-					@match.GuestTeam
-				</td>
-				<td>
-					<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a> |
-					<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
-				</td>
-			</tr>
-		}
-	}
+							@match.HomeTeam
+						</td>
+						<td style="color: @(!match.Winner ? "green" : "black")">
+							@match.GuestTeam
+						</td>
+						<td>
+							@if (User.IsInRole("Admin"))
+							{
+
+								<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a>
+								@Html.Raw("|")
+								<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
+
+							}
+						</td>
+				</tr>
+			}
+			else
+			{
+				<tr>
+					
+					<td>
+						@match.Date.ToString("dd.MM.yyy H:mm")
+					</td>
+					<td>
+						@match.HomeTeam
+					</td>
+					<td>
+						@match.GuestTeam
+					</td>
+					<td>
+						@if (User.IsInRole("Admin"))
+						{
+
+							<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a>
+							@Html.Raw("|")
+							<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
+
+						}
+					</td>
+				</tr>
+			}
+			}
 	</tbody>
 </table>
-

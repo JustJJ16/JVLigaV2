@@ -4,18 +4,21 @@
     ViewData["Title"] = "Vytvoření sezóny";
 }
 
-<h2>Vytvoření sezóny</h2>
 
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-lg-4 mx-auto">
+		<h2>Vytvoření sezóny</h2>
+		@if (ViewBag.SeasonGenerated != string.Empty)
+		{
+			<h5 style="color: green">@ViewBag.SeasonGenerated</h5>
+		}
 		<form method="post">
-			<hr />
 			<div class="form-group">
 				<label asp-for="Year"></label>
 				<input asp-for="Year" class="form-control" />
 				<span asp-validation-for="Year" class="text-danger"></span>
 			</div>
-			<button type="submit" class="btn btn-default">Vygenerovat</button>
+			<button type="submit" class="btn btn-secondary btn-sm">Vygenerovat</button>
 		</form>
 	</div>
 </div>

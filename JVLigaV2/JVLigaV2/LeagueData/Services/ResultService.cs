@@ -1,5 +1,4 @@
-﻿using LeagueData;
-using LeagueData.Models;
+﻿using JVLigaV2.LeagueData.Models;
 
 namespace JVLigaV2.LeagueData.Services
 {

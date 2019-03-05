@@ -1,31 +1,31 @@
-﻿@model JVLigaV2.Models.Admin.TeamIndexModel
+﻿@model JVLigaV2.Models.Admin.TeamCreateModel
 
 @{
 	ViewData["Title"] = "Vytvoření týmu";
 }
 
-<h2>Přidat tým</h2>
-<hr />
-@if (ViewBag.TeamCreated != "")
-{
-	<h5 style="color: green">@ViewBag.TeamCreated</h5>
-}
+
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-lg-4 mx-auto">
+		<h2>Přidat tým</h2>
+		@if (ViewBag.TeamCreated != string.Empty)
+		{
+		<h5 style="color: green">@ViewBag.TeamCreated</h5>
+		}
 		<form asp-action="CreateTeam">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="Team.Name" class="control-label"></label>
-				<input asp-for="Team.Name" class="form-control" />
-				<span asp-validation-for="Team.Name" class="text-danger"></span>
+				<label asp-for="Name" ></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="HallId" class="control-label"></label>
+				<label asp-for="HallId" ></label>
 				<select asp-for="HallId" asp-items="@ViewBag.Halls" class="form-control"></select>
 				<span asp-validation-for="HallId" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-default" />
+				<input type="submit" value="Create" class="btn btn-secondary btn-sm" />
 			</div>
 		</form>
 	</div>

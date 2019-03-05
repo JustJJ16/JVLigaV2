@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using JVLigaV2.LeagueData;
+using JVLigaV2.LeagueData.Models;
 using JVLigaV2.Models.Account;
-using LeagueData;
-using LeagueData.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -48,21 +47,12 @@ namespace JVLigaV2.Controllers
 					ModelState.AddModelError("UserName", "Uživatel nebyl nalezen.");
 					return View(model);
 				}
-				var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
+				var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, lockoutOnFailure: true);
 				if (result.Succeeded)
 				{
 					_logger.LogInformation("User logged in.");
 					return Redirect("/");
 				}
-				//if (result.RequiresTwoFactor)
-				//{
-				//	return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-				//}
-				//if (result.IsLockedOut)
-				//{
-				//	_logger.LogWarning("User account locked out.");
-				//	return Redirect("/Account/LockOut");
-				//}
 				else
 				{
 					ModelState.AddModelError("Password", "Špatně zadané jméno nebo heslo.");
@@ -101,17 +91,7 @@ namespace JVLigaV2.Controllers
 						playerRole.Name = "Player";
 						await _roleManager.CreateAsync(playerRole);
 					}
-
-					//var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-					//var callbackUrl = Url.Page(
-					//	"/Account/ConfirmEmail",
-					//	pageHandler: null,
-					//	values: new { userId = user.Id, code = code },
-					//	protocol: Request.Scheme);
-
-					//await _emailSender.SendEmailAsync(model.Email, "Confirm your email",
-					//	$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+					
 					await _signInManager.SignInAsync(user, isPersistent: false);
 					return Redirect("/");
 				}
@@ -121,8 +101,7 @@ namespace JVLigaV2.Controllers
 					System.Diagnostics.Debug.WriteLine(error.Description);
 				}
 			}
-
-			// If we got this far, something failed, redisplay form
+			
 			return RedirectToPage("/Account/Register");
 		}
 		public async Task<IActionResult> LogOut()

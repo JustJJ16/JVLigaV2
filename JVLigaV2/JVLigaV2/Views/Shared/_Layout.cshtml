@@ -1,4 +1,4 @@
-﻿@using LeagueData.Models
+﻿@using JVLigaV2.LeagueData.Models
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -23,12 +23,9 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" asp-controller="Home" asp-action="Index">
-				<img src="~/images/volleyball.png" width="30" height="30" alt="">
-			</a>
 			<div class="navbar-collapse collapse container" id="navbarSupportedContent">
 				<ul class="mr-auto navbar-nav">
-					<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+					<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Domů</a></li>
 					@await Component.InvokeAsync("SeasonMenu")
 					<li><a class="nav-link" asp-area="" asp-controller="Article" asp-action="Index">Články</a></li>
 					@if (User.IsInRole("Admin") || User.IsInRole("Editor"))

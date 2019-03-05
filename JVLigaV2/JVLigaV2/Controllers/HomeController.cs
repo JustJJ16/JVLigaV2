@@ -5,7 +5,6 @@ using JVLiga.Models;
 using JVLigaV2.LeagueData.Services;
 using JVLigaV2.Models.Articles;
 using JVLigaV2.Models.Home;
-using LeagueData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JVLigaV2.Controllers

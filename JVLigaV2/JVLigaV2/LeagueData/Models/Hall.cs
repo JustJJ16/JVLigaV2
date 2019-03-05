@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LeagueData.Models
+namespace JVLigaV2.LeagueData.Models
 {
 	public class Hall
 	{
@@ -11,6 +8,7 @@ namespace LeagueData.Models
 		public int Id { get; set; }
 		[Required]
 		[MaxLength(50)]
+		[Display(Name = "Název")]
 		public string Name { get; set; }
 	}
 }
