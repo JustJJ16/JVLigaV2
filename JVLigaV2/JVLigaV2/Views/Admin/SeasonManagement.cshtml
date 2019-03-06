@@ -21,7 +21,8 @@
 			<button type="submit" class="btn btn-secondary btn-sm">Vygenerovat</button>
 		</form>
 	</div>
-	<div class="col-lg-2 ml-lg-4"><table class="table table-sm">
+	<div class="col-lg-2 ml-lg-4">
+		<table class="table table-sm">
 	<thead class="thead-dark">
 		<tr>
 			<th>
@@ -41,7 +42,7 @@
 					@if (User.IsInRole("Admin"))
 					{
 
-						<a asp-action="DeleteYear" asp-route-id="@year">Smazat</a>
+						<a asp-action="DeleteYear" asp-route-year="@year">Smazat</a>
 					}
 				</td>
 			</tr>

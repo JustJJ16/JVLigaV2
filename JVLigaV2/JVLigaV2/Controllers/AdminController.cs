@@ -6,6 +6,7 @@ using JVLigaV2.LeagueData;
 using JVLigaV2.LeagueData.Models;
 using JVLigaV2.LeagueData.Services;
 using JVLigaV2.Models.Admin;
+using JVLigaV2.Models.Halls;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -18,13 +19,15 @@ namespace JVLigaV2.Controllers
 		private readonly HallService _halls;
 		private readonly SeasonService _seasons;
 		private readonly TeamService _team;
+		private readonly MatchService _match;
 
-		public AdminController(HallService halls, SeasonService seasons, TeamService team, LeagueContext db)
+		public AdminController(HallService halls, SeasonService seasons, TeamService team, MatchService match, LeagueContext db)
 		{
 			_halls = halls;
 			_seasons = seasons;
 			_team = team;
 			_db = db;
+			_match = match;
 		}
 		public IActionResult TeamManagement()
 		{
@@ -79,8 +82,7 @@ namespace JVLigaV2.Controllers
 
 			return Redirect("/");
 		}
-
-		//[HttpPost]
+		
 		public async Task<IActionResult> DeleteTeam(int id)
 		{
 			Team team = _team.GetById(id);
@@ -95,21 +97,34 @@ namespace JVLigaV2.Controllers
 				return Redirect("/");
 
 			ViewBag.HallCreated = string.Empty;
-			return View();
+			HallCreateModel model = new HallCreateModel();
+			model.Halls = _halls.GetAll();
+			return View(model);
 		}
 
 		[HttpPost]
-		public IActionResult HallManagement(Hall hall)
+		public IActionResult HallManagement(HallCreateModel model)
 		{
 			if (ModelState.IsValid)
 			{
+				Hall hall = new Hall();
+				hall.Name = model.HallName;
 				_db.Add(hall);
 				_db.SaveChanges();
 				ViewBag.HallCreated = "Hala přidána";
-				return View();
+				model.Halls = _halls.GetAll();
+				return View(model);
 			}
 
 			return Redirect("/");
+		}
+
+		public async Task<IActionResult> DeleteHall(int id)
+		{
+			_db.Halls.Remove(_halls.GetById(id));
+			await _db.SaveChangesAsync();
+			return Redirect("/Admin/HallManagement");
+
 		}
 
 		public IActionResult SeasonManagement()
@@ -141,6 +156,14 @@ namespace JVLigaV2.Controllers
 			}
 
 			return Redirect("/");
+		}
+
+		public async Task<IActionResult> DeleteYear(int year)
+		{
+			IEnumerable<Match> matches = _match.GetMatchesBySeason(year);
+			_db.Matches.RemoveRange(matches);
+			await _db.SaveChangesAsync();
+			return Redirect("/Admin/SeasonManagement");
 		}
 
 		public bool CheckAdminRights()

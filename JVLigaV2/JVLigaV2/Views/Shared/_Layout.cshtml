@@ -23,6 +23,49 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Domů</a>
+					</li>
+					@await Component.InvokeAsync("SeasonMenu")
+					<li class="nav-item">
+						<a class="nav-link" asp-area="" asp-controller="Article" asp-action="Index">Články</a>
+					</li>
+					@if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+					{
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdown">Redakce</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" asp-area="" asp-controller="Article" asp-action="Create">Vytvořit článek</a></li>
+								<li><a class="dropdown-item" asp-area="" asp-controller="Article" asp-action="MyArticles">Moje články</a></li>
+							</ul>
+						</li>
+					}
+					@if (User.IsInRole("Admin"))
+					{
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdown">Admin</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="HallManagement">Správa hal</a></li>
+								<li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="TeamManagement">Správa týmů</a></li>
+								<li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="SeasonManagement">Správa sezón</a></li>
+							</ul>
+						</li>
+					}
+				</ul>
+				<partial name="_LoginPartial" />
+			</div>
+		</div>	
+	</nav>
+
+
+		@*<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="navbar-collapse collapse container" id="navbarSupportedContent">
 				<ul class="mr-auto navbar-nav">
 					<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Domů</a></li>
@@ -52,13 +95,12 @@
 				</ul>
 				<partial name="_LoginPartial" />
 			</div>
-	</nav>
-	<div class="container body-content">
-		@RenderBody()
-		<hr />
-		<footer>
-		</footer>
-	</div>
+		</nav>*@
+		<div class="container body-content">
+			@RenderBody()
+			<hr />
+			<footer></footer>
+		</div>
 	<environment include="Development">
 		<script src="~/lib/jquery/dist/jquery.js"></script>
 		<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

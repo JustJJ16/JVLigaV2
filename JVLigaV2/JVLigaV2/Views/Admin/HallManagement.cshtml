@@ -1,5 +1,5 @@
 ﻿@using JVLigaV2.LeagueData.Models
-@model JVLigaV2.LeagueData.Models.Hall
+@model JVLigaV2.Models.Halls.HallCreateModel
 
 @{
 	ViewData["Title"] = "Přidat halu";
@@ -7,22 +7,51 @@
 
 
 <div class="row">
-	<div class="col-lg-4 mx-auto">
+	<div class="col-lg-4">
 		<h2>Přidat halu</h2>
 		@if (ViewBag.HallCreated != string.Empty)
 		{
 			<h5 style="color: green">@ViewBag.HallCreated</h5>
 		}
-		<form asp-action="CreateHall">
+		<form asp-action="HallManagement">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="Name" ></label>
-				<input asp-for="Name" class="form-control" />
-				<span asp-validation-for="Name" class="text-danger"></span>
+				<label asp-for="HallName" ></label>
+				<input asp-for="HallName" class="form-control" />
+				<span asp-validation-for="HallName" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Přidat" class="btn btn-secondary btn-sm" />
 			</div>
 		</form>
 	</div>
+	<div class="col-lg-2 ml-lg-4">
+	<table class="table table-sm">
+		<thead class="thead-dark">
+			<tr>
+				<th>
+					Rok
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var hall in Model.Halls)
+			{
+				<tr>
+					<td>
+						@hall.Name
+					</td>
+					<td>
+						@if (User.IsInRole("Admin"))
+						{
+
+							<a asp-action="DeleteHall" asp-route-id="@hall.Id">Smazat</a>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
 </div>
