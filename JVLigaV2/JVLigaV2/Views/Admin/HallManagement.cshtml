@@ -1,8 +1,8 @@
 ﻿@using JVLigaV2.LeagueData.Models
-@model JVLigaV2.Models.Halls.HallCreateModel
+@model JVLigaV2.Models.Admin.HallManagementModel
 
 @{
-	ViewData["Title"] = "Přidat halu";
+	ViewData["Title"] = "Správa hal";
 }
 
 
@@ -26,11 +26,11 @@
 		</form>
 	</div>
 	<div class="col-lg-2 ml-lg-4">
-	<table class="table table-sm">
+	<table class="table table-light table-sm">
 		<thead class="thead-dark">
 			<tr>
 				<th>
-					Rok
+					Název
 				</th>
 				<th></th>
 			</tr>
@@ -46,7 +46,7 @@
 						@if (User.IsInRole("Admin"))
 						{
 
-							<a asp-action="DeleteHall" asp-route-id="@hall.Id">Smazat</a>
+							<a asp-action="DeleteHall" asp-controller="Admin" asp-route-id="@hall.Id">Smazat</a>
 						}
 					</td>
 				</tr>

@@ -15,13 +15,21 @@ namespace JVLigaV2.LeagueData.Services
 		}
 		public IEnumerable<Match> GetAll()
 		{
-			return _context.Matches;
+			return _context.Matches
+				.Include(m => m.HomeTeam)
+				.Include(m => m.GuestTeam)
+				.Include(m => m.HomeTeam.Hall)
+				.Include(m => m.HomeTeam.Hall);
 		}
 
 		public Match GetById(int id)
 		{
 			return
-				_context.Matches.Include(m => m.GuestTeam).Include(m => m.HomeTeam)
+				_context.Matches
+					.Include(m => m.HomeTeam)
+					.Include(m => m.GuestTeam)
+					.Include(m => m.HomeTeam.Hall)
+					.Include(m => m.HomeTeam.Hall)
 				.FirstOrDefault(m => m.Id == id);
 		}
 
@@ -32,15 +40,19 @@ namespace JVLigaV2.LeagueData.Services
 				.Where(m => m.Date.Year == year)
 				.Where(m => m.Date >= DateTime.Now)
 				.Take(num)
+				.Include(m => m.HomeTeam)
 				.Include(m => m.GuestTeam)
-				.Include(m => m.HomeTeam);
+				.Include(m => m.HomeTeam.Hall)
+				.Include(m => m.HomeTeam.Hall);
 		}
 
 		public IEnumerable<Match> GetMatchesBySeason(int year)
 		{
 			return _context.Matches.Where(m => m.Date.Year == year)
-				.Include(m => m.GuestTeam)
 				.Include(m => m.HomeTeam)
+				.Include(m => m.GuestTeam)
+				.Include(m => m.HomeTeam.Hall)
+				.Include(m => m.HomeTeam.Hall)
 				.OrderBy(m => m.Date);
 		}
 	}

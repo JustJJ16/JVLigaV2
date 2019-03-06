@@ -1,0 +1,24 @@
+﻿@model JVLigaV2.Models.Team.TeamDetailModel
+
+@{
+	ViewData["Title"] = @Model.Team.Name;
+}
+<div class="col-lg-11 mx-auto">
+	<div clas="row">
+		<div class="col-lg-5">
+				<h3>@Model.Team.Name</h3>
+				<p>Hala: @Model.Team.Hall.Name</p>
+				<h6>Soupiska:</h6>
+				@if (Model.Players != null)
+			{
+				foreach (var player in Model.Players)
+				{
+				@Html.Raw(player.FirstName + " " + player.LastName)
+				}
+			}
+		</div>
+		<div class="col-lg-4">
+			@await Component.InvokeAsync("Standings")
+		</div>
+	</div>
+</div>

@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JVLigaV2.Models.Halls
+namespace JVLigaV2.Models.Admin
 {
-	public class HallCreateModel
+	public class HallManagementModel
 	{
 		[Display(Name = "Název")]
 		public string HallName { get; set; }

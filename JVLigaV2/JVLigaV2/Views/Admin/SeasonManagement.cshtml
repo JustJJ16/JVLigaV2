@@ -1,7 +1,7 @@
-﻿@model JVLigaV2.Models.Admin.SeasonModel
+﻿@model JVLigaV2.Models.Admin.SeasonManagementModel
 
 @{
-    ViewData["Title"] = "Vytvoření sezóny";
+	ViewData["Title"] = "Správa sezón";
 }
 
 
@@ -22,7 +22,7 @@
 		</form>
 	</div>
 	<div class="col-lg-2 ml-lg-4">
-		<table class="table table-sm">
+		<table class="table table-light table-sm">
 	<thead class="thead-dark">
 		<tr>
 			<th>
@@ -42,7 +42,7 @@
 					@if (User.IsInRole("Admin"))
 					{
 
-						<a asp-action="DeleteYear" asp-route-year="@year">Smazat</a>
+						<a asp-action="DeleteYear" asp-controller="Admin" asp-route-year="@year">Smazat</a>
 					}
 				</td>
 			</tr>

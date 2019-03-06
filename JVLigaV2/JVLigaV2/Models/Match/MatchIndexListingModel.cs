@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using JVLigaV2.LeagueData.Models;
 
 namespace JVLigaV2.Models.Match
 {
@@ -7,9 +8,9 @@ namespace JVLigaV2.Models.Match
 	{
 		public int Id { get; set; }
 		[Display(Name ="Domácí")]
-		public string HomeTeam { get; set; }
+		public LeagueData.Models.Team HomeTeam { get; set; }
 		[Display(Name = "Hosté")]
-		public string GuestTeam { get; set; }
+		public LeagueData.Models.Team GuestTeam { get; set; }
 		[Display(Name = "Datum")]
 		public DateTime Date { get; set; }
 

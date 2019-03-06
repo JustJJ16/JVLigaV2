@@ -20,32 +20,35 @@ namespace JVLigaV2.Controllers
 		private readonly SeasonService _seasons;
 		private readonly TeamService _team;
 		private readonly MatchService _match;
+		private readonly PlayerService _player;
 
-		public AdminController(HallService halls, SeasonService seasons, TeamService team, MatchService match, LeagueContext db)
+		public AdminController(HallService halls, SeasonService seasons, TeamService team, MatchService match, PlayerService player, LeagueContext db)
 		{
 			_halls = halls;
 			_seasons = seasons;
 			_team = team;
 			_db = db;
 			_match = match;
+			_player = player;
 		}
 		public IActionResult TeamManagement()
 		{
 				if (!CheckAdminRights())
 				return Redirect("/");
-			List<Hall> hallList = _halls.GetAll().ToList();
-			List<SelectListItem> halls = new List<SelectListItem>();
+			var hallList = _halls.GetAll().ToList();
+			var halls = new List<SelectListItem>();
 			foreach (var hall in hallList)
 			{
-				SelectListItem item = new SelectListItem();
-				item.Value = hall.Id.ToString();
-				item.Text = hall.Name;
+				var item = new SelectListItem
+				{
+					Value = hall.Id.ToString(),
+					Text = hall.Name
+				};
 				halls.Add(item);
 			}
 			ViewBag.Halls = halls;
 			ViewBag.TeamCreated = string.Empty;
-			TeamManagementModel model = new TeamManagementModel();
-			model.Teams = _team.GetAll();
+			var model = new TeamManagementModel {Teams = _team.GetAll()};
 			return View(model);
 		}
 
@@ -65,18 +68,19 @@ namespace JVLigaV2.Controllers
 
 				ViewBag.TeamCreated = "Tým vytvořen";
 
-				List<Hall> HallList = _halls.GetAll().ToList();
-				List<SelectListItem> Halls = new List<SelectListItem>();
-				foreach (var hall in HallList)
+				var hallList = _halls.GetAll().ToList();
+				var halls = new List<SelectListItem>();
+				foreach (var hall in hallList)
 				{
-					SelectListItem item = new SelectListItem();
-					item.Value = hall.Id.ToString();
-					item.Text = hall.Name;
-					Halls.Add(item);
+					var item = new SelectListItem
+					{
+						Value = hall.Id.ToString(),
+						Text = hall.Name
+					};
+					halls.Add(item);
 				}
-				ViewBag.Halls = Halls;
-				TeamManagementModel model = new TeamManagementModel();
-				model.Teams = _team.GetAll();
+				ViewBag.Halls = halls;
+				var model = new TeamManagementModel {Teams = _team.GetAll()};
 				return View(model);
 			}
 
@@ -97,18 +101,16 @@ namespace JVLigaV2.Controllers
 				return Redirect("/");
 
 			ViewBag.HallCreated = string.Empty;
-			HallCreateModel model = new HallCreateModel();
-			model.Halls = _halls.GetAll();
+			var model = new HallManagementModel {Halls = _halls.GetAll()};
 			return View(model);
 		}
 
 		[HttpPost]
-		public IActionResult HallManagement(HallCreateModel model)
+		public IActionResult HallManagement(HallManagementModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				Hall hall = new Hall();
-				hall.Name = model.HallName;
+				var hall = new Hall {Name = model.HallName};
 				_db.Add(hall);
 				_db.SaveChanges();
 				ViewBag.HallCreated = "Hala přidána";
@@ -132,38 +134,101 @@ namespace JVLigaV2.Controllers
 			if (!CheckAdminRights())
 				return Redirect("/");
 			ViewBag.SeasonGenerated = string.Empty;
-			SeasonModel model = new SeasonModel();
-			model.Years = _seasons.GetAvailableSeasons();
+			SeasonManagementModel model = new SeasonManagementModel {Years = _seasons.GetAvailableSeasons()};
 			return View(model);
 		}
 
 		[HttpPost]
-		public IActionResult SeasonManagement(SeasonModel model)
+		public IActionResult SeasonManagement(SeasonManagementModel model)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid) return Redirect("/");
+			var teams = _db.Teams;
+			if (teams.Count() != 14)
 			{
-				var teams = _db.Teams;
-				if (teams.Count() != 14)
-				{
-					ModelState.AddModelError("Year", "Počet týmů v lize musí být 14!");
-					return View(model);
-				}
-
-				_seasons.GenerateSeason(model.Year);
-				ViewBag.SeasonGenerated = "Sezóna vytvořena";
-				model.Years = _seasons.GetAvailableSeasons();
+				ModelState.AddModelError("Year", "Počet týmů v lize musí být 14!");
 				return View(model);
 			}
 
-			return Redirect("/");
+			_seasons.GenerateSeason(model.Year);
+			ViewBag.SeasonGenerated = "Sezóna vytvořena";
+			model.Years = _seasons.GetAvailableSeasons();
+			return View(model);
+
 		}
 
 		public async Task<IActionResult> DeleteYear(int year)
 		{
+			if (!CheckAdminRights())
+				return Redirect("/");
 			IEnumerable<Match> matches = _match.GetMatchesBySeason(year);
 			_db.Matches.RemoveRange(matches);
 			await _db.SaveChangesAsync();
-			return Redirect("/Admin/SeasonManagement");
+			return RedirectToAction("SeasonManagement","Admin");
+		}
+
+		public IActionResult PlayerManagement()
+		{
+			var model = new PlayerManagementModel();
+			var teamList = _team.GetAll().ToList();
+			var teams = new List<SelectListItem>();
+			foreach (var team in teamList)
+			{
+				var item = new SelectListItem
+				{
+					Value = team.Id.ToString(),
+					Text = team.Name
+				};
+				teams.Add(item);
+			}
+			ViewBag.Teams = teams;
+			model.Players = _player.GetAll();
+
+			return View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> PlayerManagement(PlayerManagementModel model)
+		{
+			var player = new Player
+			{
+				FirstName = model.FirstName,
+				LastName = model.LastName,
+				Team = _team.GetById(model.TeamId)
+			};
+			await _db.Players.AddAsync(player);
+			await _db.SaveChangesAsync();
+
+			return RedirectToAction("PlayerManagement", "Admin");
+		}
+
+		public IActionResult PlayerChange(string id)
+		{
+			var model = new PlayerChangeModel {Player = _player.GetById(id)};
+			var teamList = _team.GetAll().ToList();
+			var teams = new List<SelectListItem>();
+			foreach (var team in teamList)
+			{
+				var item = new SelectListItem
+				{
+					Value = team.Id.ToString(),
+					Text = team.Name
+				};
+				teams.Add(item);
+			}
+			ViewBag.Teams = teams;
+			return View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> PlayerChange(PlayerChangeModel model, string id)
+		{
+			if (!ModelState.IsValid) return Redirect("/");
+
+			var player = _player.GetById(id);
+			player.Team = _team.GetById(model.TeamId);
+			_db.Update(player);
+			await _db.SaveChangesAsync();
+			return RedirectToAction("PlayerManagement", "Admin");
 		}
 
 		public bool CheckAdminRights()

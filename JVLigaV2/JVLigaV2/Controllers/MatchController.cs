@@ -14,16 +14,18 @@ namespace JVLigaV2.Controllers
 	{
 		private readonly MatchService _match;
 		private readonly TeamService _team;
+		private readonly PlayerService _player;
 		private readonly ResultService _result;
 		private readonly LeagueContext _db;
 		private readonly SignInManager<ApplicationUser> _singInManager;
 		private readonly UserManager<ApplicationUser> _userManager;
 
-		public MatchController(MatchService match, TeamService team, ResultService result, LeagueContext db, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+		public MatchController(MatchService match, TeamService team, ResultService result, PlayerService player, LeagueContext db, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
 		{
 			_match = match;
 			_team = team;
 			_result = result;
+			_player = player;
 			_db = db;
 			_singInManager = signInManager;
 			_userManager = userManager;
@@ -39,8 +41,8 @@ namespace JVLigaV2.Controllers
 					.Select(result => new MatchIndexListingModel
 					{
 						Id = result.Id,
-						HomeTeam = _team.GetById(result.HomeTeam.Id).Name,
-						GuestTeam = _team.GetById(result.GuestTeam.Id).Name,
+						HomeTeam = _team.GetById(result.HomeTeam.Id),
+						GuestTeam = _team.GetById(result.GuestTeam.Id),
 						Date = result.Date,
 						Winner = result.Winner
 
@@ -60,8 +62,8 @@ namespace JVLigaV2.Controllers
 					.Select(result => new MatchIndexListingModel
 					{
 						Id = result.Id,
-						HomeTeam = _team.GetById(result.HomeTeam.Id).Name,
-						GuestTeam = _team.GetById(result.GuestTeam.Id).Name,
+						HomeTeam = _team.GetById(result.HomeTeam.Id),
+						GuestTeam = _team.GetById(result.GuestTeam.Id),
 						Date = result.Date,
 						Winner = result.Winner
 
@@ -84,8 +86,8 @@ namespace JVLigaV2.Controllers
 			var strMatch = new MatchIndexListingModel()
 			{
 				Date = match.Date,
-				HomeTeam = match.HomeTeam.Name,
-				GuestTeam = match.GuestTeam.Name,
+				HomeTeam = match.HomeTeam,
+				GuestTeam = match.GuestTeam,
 				Id = match.Id
 			};
 			MatchEditModel model = new MatchEditModel()
@@ -129,8 +131,8 @@ namespace JVLigaV2.Controllers
 			var strMatch = new MatchIndexListingModel()
 			{
 				Date = match.Date,
-				HomeTeam = match.HomeTeam.Name,
-				GuestTeam = match.GuestTeam.Name,
+				HomeTeam = match.HomeTeam,
+				GuestTeam = match.GuestTeam,
 				Id = match.Id
 			};
 			model.MatchWithTeams = strMatch;
@@ -138,6 +140,15 @@ namespace JVLigaV2.Controllers
 
 			ViewBag.Succeed = "Výsledky zadány.";
 
+			return View(model);
+		}
+
+		public IActionResult Detail(int id)
+		{
+			MatchDetailModel model = new MatchDetailModel();
+			model.Match = _match.GetById(id);
+			model.HomeTeamPlayers = _player.GetPlayersForTeam(model.Match.HomeTeam);
+			model.GuestTeamPlayers = _player.GetPlayersForTeam(model.Match.GuestTeam);
 			return View(model);
 		}
 	}

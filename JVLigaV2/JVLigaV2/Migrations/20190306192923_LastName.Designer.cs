@@ -4,14 +4,16 @@ using JVLigaV2.LeagueData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JVLigaV2.Migrations
 {
     [DbContext(typeof(LeagueContext))]
-    partial class LeagueContextModelSnapshot : ModelSnapshot
+    [Migration("20190306192923_LastName")]
+    partial class LastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace JVLigaV2.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<int?>("PlayerId");
+                    b.Property<string>("PlayerId");
 
                     b.Property<string>("SecurityStamp");
 
@@ -77,7 +79,7 @@ namespace JVLigaV2.Migrations
 
                     b.Property<int?>("MatchId");
 
-                    b.Property<int?>("PlayerId");
+                    b.Property<string>("PlayerId");
 
                     b.Property<DateTime>("PublishedDate");
 
@@ -142,9 +144,8 @@ namespace JVLigaV2.Migrations
 
             modelBuilder.Entity("JVLigaV2.LeagueData.Models.Player", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName")
                         .IsRequired()

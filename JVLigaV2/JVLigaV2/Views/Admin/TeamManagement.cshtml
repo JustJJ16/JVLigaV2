@@ -30,7 +30,7 @@
 	</form>
 </div>
 	<div class="col-lg-4">
-		<table class="table table-sm">
+		<table class="table table-light table-sm">
 			<thead class="thead-dark">
 				<tr>
 					<th>
@@ -50,7 +50,7 @@
 							@if (User.IsInRole("Admin"))
 							{
 
-								<a asp-action="DeleteTeam" asp-route-id="@team.Id">Smazat</a>
+								<a asp-action="DeleteTeam" asp-controller="Admin" asp-route-id="@team.Id">Smazat</a>
 							}
 						</td>
 					</tr>

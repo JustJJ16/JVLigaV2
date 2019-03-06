@@ -11,7 +11,7 @@
 }
 
 
-<div class="col-lg-8 mx-auto">
+<div class="col-lg-9 mx-auto">
 	
 	<h2>@Model.Title</h2>
 	<table class="table">
@@ -40,10 +40,10 @@
 					</td>
 					<td style="color: @(match.Winner ? "green" : "black")">
 
-						@match.HomeTeam
+						<a asp-action="Detail" asp-route-id="@match.HomeTeam.Id">@match.HomeTeam.Name</a>
 					</td>
 					<td style="color: @(!match.Winner ? "green" : "black")">
-						@match.GuestTeam
+						<a asp-action="Detail" asp-route-id="@match.GuestTeam.Id">@match.GuestTeam.Name</a>
 					</td>
 					<td>
 						@if (User.IsInRole("Admin"))
@@ -64,11 +64,11 @@
 						@match.Date.ToString("dd. MM. yyy H:mm")
 					</td>
 					<td>
-						@match.HomeTeam
+						<a asp-action="Detail" asp-route-id="@match.HomeTeam.Id">@match.HomeTeam.Name</a>
 					</td>
 					<td>
-						@match.GuestTeam
-					</td>
+						<a asp-action="Detail" asp-route-id="@match.GuestTeam.Id">@match.GuestTeam.Name</a>
+</td>
 					<td>
 						@if (User.IsInRole("Admin"))
 						{

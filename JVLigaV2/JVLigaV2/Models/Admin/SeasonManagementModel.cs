@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JVLigaV2.Models.Admin
 {
-	public class SeasonModel
+	public class SeasonManagementModel
 	{
 		[Required(ErrorMessage = "Zadejte rok sezóny.")]
 		[Display(Name = "Rok sezóny")]

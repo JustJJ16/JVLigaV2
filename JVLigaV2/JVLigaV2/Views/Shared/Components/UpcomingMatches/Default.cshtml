@@ -25,16 +25,16 @@
 	{
 			if (match.Date < DateTime.Now.AddMinutes(15))
 			{
-				<tr>
+				<tr onclick="location.href = '@(Url.Action("Detail", "Match", new { id = match.Id }))'">
 						<td>
 							@match.Date.ToString("dd.MM.yyy H:mm")
 						</td>
 						<td style="color: @(match.Winner ? "green" : "black")">
 
-							@match.HomeTeam
+							<a asp-action="Detail" asp-controller="Team" asp-route-id="@match.HomeTeam.Id"></a>@match.HomeTeam.Name
 						</td>
 						<td style="color: @(!match.Winner ? "green" : "black")">
-							@match.GuestTeam
+							@match.GuestTeam.Name
 						</td>
 						<td>
 							@if (User.IsInRole("Admin"))
@@ -50,16 +50,16 @@
 			}
 			else
 			{
-				<tr>
+				<tr onclick="location.href = '@(Url.Action("Detail", "Match", new { id = match.Id }))'">
 					
 					<td>
 						@match.Date.ToString("dd.MM.yyy H:mm")
 					</td>
 					<td>
-						@match.HomeTeam
+						@match.HomeTeam.Name
 					</td>
 					<td>
-						@match.GuestTeam
+						@match.GuestTeam.Name
 					</td>
 					<td>
 						@if (User.IsInRole("Admin"))

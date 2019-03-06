@@ -13,6 +13,6 @@ namespace JVLigaV2.Models.Admin
 		[Required]
 		[DisplayName("Hala")]
 		public string HallId { get; set; }
-		public IEnumerable<Team> Teams { get; set; }
+		public IEnumerable<LeagueData.Models.Team> Teams { get; set; }
 	}
 }

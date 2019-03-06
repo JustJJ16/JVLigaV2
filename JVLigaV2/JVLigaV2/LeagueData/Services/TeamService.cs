@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using JVLigaV2.LeagueData.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JVLigaV2.LeagueData.Services
 {
@@ -17,7 +18,8 @@ namespace JVLigaV2.LeagueData.Services
 		public Team GetById(int id)
 		{
 			return _context.Teams
-			.FirstOrDefault(t => t.Id == id);
+					.Include(t => t.Hall)
+					.FirstOrDefault(t => t.Id == id);
 		}
 
 		public IEnumerable<Team> GetAll()

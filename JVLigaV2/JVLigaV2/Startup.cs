@@ -36,7 +36,7 @@ namespace JVLigaV2
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ZuzConnection")));
+			services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LeagueConnection")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<LeagueContext>()
@@ -48,6 +48,7 @@ namespace JVLigaV2
 			services.AddScoped<ResultService>();
 			services.AddScoped<SeasonService>();
 			services.AddScoped<TeamService>();
+			services.AddScoped<PlayerService>();
 
 			services.Configure<IdentityOptions>(options =>
 			{

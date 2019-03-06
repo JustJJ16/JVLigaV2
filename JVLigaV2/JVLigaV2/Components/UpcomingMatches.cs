@@ -28,8 +28,8 @@ namespace JVLigaV2.Components
 				.Select(result => new MatchIndexListingModel
 				{
 					Id = result.Id,
-					HomeTeam = _team.GetById(result.HomeTeam.Id).Name,
-					GuestTeam = _team.GetById(result.GuestTeam.Id).Name,
+					HomeTeam = _team.GetById(result.HomeTeam.Id),
+					GuestTeam = _team.GetById(result.GuestTeam.Id),
 					Date = result.Date,
 					Winner = result.Winner
 

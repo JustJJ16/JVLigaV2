@@ -11,7 +11,7 @@ namespace JVLigaV2.LeagueData.Models
 		public string FirstName { get; set; }
 		[Required]
 		[MaxLength(50)]
-		public string SecondName { get; set; }
+		public string LastName { get; set; }
 		[Required]
 		public Team Team { get; set; }
 	}

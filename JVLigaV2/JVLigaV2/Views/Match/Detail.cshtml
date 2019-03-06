@@ -1,0 +1,53 @@
+﻿@model JVLigaV2.Models.Match.MatchDetailModel
+
+@{
+	ViewData["Title"] = @Model.Match.HomeTeam.Name + " VS " + Model.Match.GuestTeam.Name;
+}
+	<div class="col-lg-12 mx-auto">
+		<div class="row">
+		<div class="col-lg-8">
+			<div class="row">
+				<div class="col-lg-5 text-left">
+					<div class="row">
+						<a style="width: 100%" asp-action="Detail" asp-controller="Team" asp-route-id="@Model.Match.HomeTeam.Id">
+							<h2>@Model.Match.HomeTeam.Name</h2>
+						</a>
+					</div>
+					<div class="row">
+						<h6>Soupiska:</h6>
+						@if (Model.HomeTeamPlayers != null)
+						{
+							foreach (var player in Model.HomeTeamPlayers)
+							{
+								<a style="width: 100%" asp-action="Detail" asp-controller="Player" asp-route-id="@player.Id">@player.FirstName @player.LastName</a>
+							}
+						}
+					</div>
+				</div>
+				<div class="col-lg-2 text-center">
+					<h1>VS</h1>
+				</div>
+				<div class="col-lg-5 text-right">
+					<div class="row">
+						<a style="width: 100%" asp-action="Detail" asp-controller="Team" asp-route-id="@Model.Match.HomeTeam.Id">
+							<h2>@Model.Match.GuestTeam.Name</h2>
+						</a>
+					</div>
+					<div class="row">
+						<h6 style="width: 100%">Soupiska:</h6>
+						@if (Model.GuestTeamPlayers != null)
+						{
+							foreach (var player in Model.GuestTeamPlayers)
+							{
+								<a style="width: 100%" asp-action="Detail" asp-controller="Player" asp-route-id="@player.Id">@player.FirstName @player.LastName</a>
+							}
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			@await Component.InvokeAsync("Standings")
+		</div>
+	</div>
+</div>
