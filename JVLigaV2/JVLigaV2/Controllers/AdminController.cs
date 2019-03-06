@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using JVLigaV2.LeagueData;
 using JVLigaV2.LeagueData.Models;
 using JVLigaV2.LeagueData.Services;
@@ -16,14 +17,16 @@ namespace JVLigaV2.Controllers
 		private readonly LeagueContext _db;
 		private readonly HallService _halls;
 		private readonly SeasonService _seasons;
+		private readonly TeamService _team;
 
-		public AdminController(HallService halls, SeasonService seasons,LeagueContext db)
+		public AdminController(HallService halls, SeasonService seasons, TeamService team, LeagueContext db)
 		{
 			_halls = halls;
 			_seasons = seasons;
+			_team = team;
 			_db = db;
 		}
-		public IActionResult CreateTeam()
+		public IActionResult TeamManagement()
 		{
 				if (!CheckAdminRights())
 				return Redirect("/");
@@ -38,11 +41,13 @@ namespace JVLigaV2.Controllers
 			}
 			ViewBag.Halls = halls;
 			ViewBag.TeamCreated = string.Empty;
-			return View();
+			TeamManagementModel model = new TeamManagementModel();
+			model.Teams = _team.GetAll();
+			return View(model);
 		}
 
 		[HttpPost]
-		public IActionResult CreateTeam(TeamCreateModel teamModel)
+		public IActionResult TeamManagement(TeamManagementModel teamModel)
 		{
 			if (ModelState.IsValid)
 			{
@@ -67,12 +72,24 @@ namespace JVLigaV2.Controllers
 					Halls.Add(item);
 				}
 				ViewBag.Halls = Halls;
-				return View();
+				TeamManagementModel model = new TeamManagementModel();
+				model.Teams = _team.GetAll();
+				return View(model);
 			}
 
 			return Redirect("/");
 		}
-		public IActionResult CreateHall()
+
+		//[HttpPost]
+		public async Task<IActionResult> DeleteTeam(int id)
+		{
+			Team team = _team.GetById(id);
+			_db.Teams.Remove(team);
+			await _db.SaveChangesAsync();
+			return Redirect("/Admin/TeamManagement");
+		}
+
+		public IActionResult HallManagement()
 		{
 			if (!CheckAdminRights())
 				return Redirect("/");
@@ -82,7 +99,7 @@ namespace JVLigaV2.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult CreateHall(Hall hall)
+		public IActionResult HallManagement(Hall hall)
 		{
 			if (ModelState.IsValid)
 			{
@@ -95,16 +112,18 @@ namespace JVLigaV2.Controllers
 			return Redirect("/");
 		}
 
-		public IActionResult GenerateSeason()
+		public IActionResult SeasonManagement()
 		{
 			if (!CheckAdminRights())
 				return Redirect("/");
 			ViewBag.SeasonGenerated = string.Empty;
-			return View();
+			SeasonModel model = new SeasonModel();
+			model.Years = _seasons.GetAvailableSeasons();
+			return View(model);
 		}
 
 		[HttpPost]
-		public IActionResult GenerateSeason(SeasonModel model)
+		public IActionResult SeasonManagement(SeasonModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -117,7 +136,8 @@ namespace JVLigaV2.Controllers
 
 				_seasons.GenerateSeason(model.Year);
 				ViewBag.SeasonGenerated = "Sezóna vytvořena";
-				return View();
+				model.Years = _seasons.GetAvailableSeasons();
+				return View(model);
 			}
 
 			return Redirect("/");

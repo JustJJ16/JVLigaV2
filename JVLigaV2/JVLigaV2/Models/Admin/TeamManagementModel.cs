@@ -1,10 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using JVLigaV2.LeagueData.Models;
 
 namespace JVLigaV2.Models.Admin
 {
-	public class TeamCreateModel
+	public class TeamManagementModel
 	{
 		[Required]
 		[DisplayName("Název")]
@@ -12,5 +13,6 @@ namespace JVLigaV2.Models.Admin
 		[Required]
 		[DisplayName("Hala")]
 		public string HallId { get; set; }
+		public IEnumerable<Team> Teams { get; set; }
 	}
 }

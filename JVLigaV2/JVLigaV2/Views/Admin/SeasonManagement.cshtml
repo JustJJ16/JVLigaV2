@@ -6,7 +6,7 @@
 
 
 <div class="row">
-	<div class="col-lg-4 mx-auto">
+	<div class="col-lg-4">
 		<h2>Vytvoření sezóny</h2>
 		@if (ViewBag.SeasonGenerated != string.Empty)
 		{
@@ -20,5 +20,33 @@
 			</div>
 			<button type="submit" class="btn btn-secondary btn-sm">Vygenerovat</button>
 		</form>
+	</div>
+	<div class="col-lg-2 ml-lg-4"><table class="table table-sm">
+	<thead class="thead-dark">
+		<tr>
+			<th>
+				Rok
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var year in Model.Years)
+		{
+			<tr>
+				<td>
+					@year
+				</td>
+				<td>
+					@if (User.IsInRole("Admin"))
+					{
+
+						<a asp-action="DeleteYear" asp-route-id="@year">Smazat</a>
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
 	</div>
 </div>

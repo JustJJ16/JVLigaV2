@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using JVLigaV2.LeagueData.Models;
 
 namespace JVLigaV2.LeagueData.Services
@@ -16,6 +18,11 @@ namespace JVLigaV2.LeagueData.Services
 		{
 			return _context.Teams
 			.FirstOrDefault(t => t.Id == id);
+		}
+
+		public IEnumerable<Team> GetAll()
+		{
+			return _context.Teams;
 		}
 	}
 }
