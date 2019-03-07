@@ -44,27 +44,6 @@ namespace JVLigaV2.Controllers
 			return View(model);
 		}
 
-		public IActionResult About()
-		{
-			ViewData["Message"] = "Your application description page.";
-
-			ViewBag.Ahoj = new List<string>() { "ahoj", "jak je" };
-
-			return View();
-		}
-
-		public IActionResult Contact()
-		{
-			ViewData["Message"] = "Your contact page.";
-
-			return View();
-		}
-
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

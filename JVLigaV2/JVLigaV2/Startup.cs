@@ -36,7 +36,7 @@ namespace JVLigaV2
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ZuzConnection")));
+			services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LeagueConnection")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<LeagueContext>()
@@ -75,7 +75,7 @@ namespace JVLigaV2
 			{
 				// Cookie settings
 				options.Cookie.HttpOnly = true;
-				options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+				options.ExpireTimeSpan = TimeSpan.FromDays(30);
 
 				options.LoginPath = "/Views/Account/Login";
 				options.AccessDeniedPath = "/Views/Account/AccessDenied";

@@ -6,14 +6,19 @@
 }
 
 <div class="row">
-<div class="col-lg-4">
-	<form method="post">
-		<div class="form-group">
-			<label asp-for="TeamId"></label>
-			<select asp-for="TeamId" asp-items="@ViewBag.Teams" class="form-control"></select>
-			<span asp-validation-for="TeamId" class="text-danger"></span>
-		</div>
-		<button type="submit" class="btn btn-secondary btn-sm">Změnit</button>
-	</form>
+	<div class="col-lg-4">
+		<form method="post">
+			<div class="form-group">
+				<label asp-for="TeamId"></label>
+				<select asp-for="TeamId" asp-items="@ViewBag.Teams" class="form-control"></select>
+				<span asp-validation-for="TeamId" class="text-danger"></span>
+			</div>
+			<button type="submit" class="btn btn-secondary btn-sm">Změnit</button>
+		</form>
 	</div>
 </div>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

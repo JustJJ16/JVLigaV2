@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using JVLigaV2.LeagueData.Models;
 
 namespace JVLigaV2.Models.Articles
@@ -11,21 +9,27 @@ namespace JVLigaV2.Models.Articles
 	{
 		[Required]
 		[MaxLength(100)]
+		[Display(Name="Nadpis")]
 		public string Title { get; set; }
 
 		[Required]
 		[MaxLength(1000)]
+		[Display(Name = "Popis")]
 		public string Description { get; set; }
 		[Required]
 		[MaxLength(20000)]
+		[Display(Name = "Tělo")]
 		public string Body { get; set; }
 		[Required]
+		[Display(Name = "Úvodní fotka")]
 		public IFormFile ArticleImage { get; set; }
-		[Required]
+		[Display(Name = "Vztahuje se k zápasu")]
+		public string MatchId { get; set; }
+		[Display(Name = "Vztahuje se k týmu")]
+		public string TeamId { get; set; }
+		[Display(Name = "Vztahuje se k hráči")]
+		public string PlayerId { get; set; }
 		public DateTime PublishedDate { get; set; }
-		public LeagueData.Models.Match Match { get; set; }
-		public LeagueData.Models.Team Team { get; set; }
-		public Player Player { get; set; }
 		public ApplicationUser User { get; set; }
 	}
 }

@@ -23,31 +23,36 @@
 	</div>
 	<div class="col-lg-2 ml-lg-4">
 		<table class="table table-light table-sm">
-	<thead class="thead-dark">
-		<tr>
-			<th>
-				Rok
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var year in Model.Years)
-		{
-			<tr>
-				<td>
-					@year
-				</td>
-				<td>
-					@if (User.IsInRole("Admin"))
-					{
+			<thead class="thead-dark">
+				<tr>
+					<th>
+						Rok
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var year in Model.Years)
+				{
+					<tr>
+						<td>
+							@year
+						</td>
+						<td>
+							@if (User.IsInRole("Admin"))
+							{
 
-						<a asp-action="DeleteYear" asp-controller="Admin" asp-route-year="@year">Smazat</a>
-					}
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+								<a asp-action="DeleteYear" asp-controller="Admin" asp-route-year="@year">Smazat</a>
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 	</div>
 </div>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

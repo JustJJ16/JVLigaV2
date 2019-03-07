@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JVLigaV2.Controllers
 {
@@ -19,13 +20,19 @@ namespace JVLigaV2.Controllers
 
 		private readonly LeagueContext _db;
 		private readonly ArticleService _articles;
+		private readonly TeamService _team;
+		private readonly MatchService _match;
+		private readonly PlayerService _player;
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly SignInManager<ApplicationUser> _singInManager;
 		private readonly UserManager<ApplicationUser> _userManager;
 
-		public ArticleController(ArticleService articles, IHostingEnvironment hostingEnvironment, LeagueContext db, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+		public ArticleController(MatchService match, PlayerService player, TeamService team, ArticleService articles, IHostingEnvironment hostingEnvironment, LeagueContext db, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
 		{
 			_articles = articles;
+			_team = team;
+			_player = player;
+			_match = match;
 			_db = db;
 			_singInManager = signInManager;
 			_userManager = userManager;
@@ -34,21 +41,22 @@ namespace JVLigaV2.Controllers
 
 		public IActionResult Index()
 		{
-			var articleModels = _articles.GetAll();
-			var listingResult = articleModels
+			var articles = _articles.GetAll().ToList();
+			var model = new ArticleIndexModel();
+			var listingResult = articles
 				.Select(result => new ArticleIndexListingModel
 				{
 					Id = result.Id,
 					Title = result.Title,
-					Desrciption = result.Description
+					Desrciption = result.Description,
+					ImagePath = result.ImagePath,
+					PublishedDate = result.PublishedDate
 				});
 
-			var model = new ArticleIndexModel()
-			{
-				Articles = listingResult
-			};
+			model.Articles = listingResult;
 			return View(model);
 		}
+
 		public async Task<IActionResult> MyArticles()
 		{
 			var articleModels = _articles.GetMyArticles(await _userManager.GetUserAsync(User));
@@ -57,7 +65,9 @@ namespace JVLigaV2.Controllers
 				{
 					Id = result.Id,
 					Title = result.Title,
-					Desrciption = result.Description
+					Desrciption = result.Description,
+					ImagePath = result.ImagePath,
+					PublishedDate = result.PublishedDate
 				});
 
 			var model = new ArticleIndexModel()
@@ -70,6 +80,43 @@ namespace JVLigaV2.Controllers
 
 		public IActionResult Create()
 		{
+			var playerList = _player.GetAll();
+			var players = new List<SelectListItem> {new SelectListItem()};
+			foreach (var player in playerList)
+			{
+				var item = new SelectListItem
+				{
+					Value = player.Id.ToString(),
+					Text = player.FirstName + " " + player.LastName
+				};
+				players.Add(item);
+			}
+			var matchList = _match.GetAll();
+			var matches = new List<SelectListItem> {new SelectListItem()};
+			foreach (var match in matchList)
+			{
+				var item = new SelectListItem
+				{
+					Value = match.Id.ToString(),
+					Text = match.HomeTeam.Name + "-" + match.GuestTeam.Name + " " + match.Date.ToString("dd.MM.yyy H:mm")
+				};
+				matches.Add(item);
+			}
+
+			var teamList = _team.GetAll();
+			var teams = new List<SelectListItem> {new SelectListItem()};
+			foreach (var team in teamList)
+			{
+				var item = new SelectListItem
+				{
+					Value = team.Id.ToString(),
+					Text = team.Name
+				};
+				teams.Add(item);
+			}
+			ViewBag.Teams = teams;
+			ViewBag.Players = players;
+			ViewBag.Matches = matches;
 			return View();
 		}
 		[HttpPost]
@@ -84,7 +131,7 @@ namespace JVLigaV2.Controllers
 			{
 				model.User = await _userManager.GetUserAsync(User);
 			}
-
+			
 			model.PublishedDate = DateTime.Now;
 
 			Article article = new Article()
@@ -95,6 +142,21 @@ namespace JVLigaV2.Controllers
 				PublishedDate = model.PublishedDate,
 				User = model.User
 			};
+
+			if(Convert.ToInt32(model.PlayerId) != 0)
+			{
+				article.Player = _player.GetById(Convert.ToInt32(model.PlayerId));
+			}
+
+			if(Convert.ToInt32(model.MatchId) != 0)
+			{
+				article.Match = _match.GetById(Convert.ToInt32(model.MatchId));
+			}
+
+			if(Convert.ToInt32(model.TeamId) != 0)
+			{
+				article.Team = _team.GetById(Convert.ToInt32(model.TeamId));
+			}
 
 			if (model.ArticleImage != null)
 			{
@@ -120,17 +182,50 @@ namespace JVLigaV2.Controllers
 			return Redirect("/Article");
 		}
 
-		public ActionResult Detail(int id)
+		public IActionResult Detail(int id)
 		{
 			var article = _articles.GetById(id);
-			ArticleDetailModel model = new ArticleDetailModel(){
+			var model = new ArticleDetailModel(){
 				Title = article.Title,
 				Description = article.Description,
 				Body = article.Body,
 				ImgSrc = article.ImagePath
 			};
 
+			if (article.Match != null)
+				model.Match = _match.GetById(article.Match.Id);
+			if (article.Player != null)
+				model.Player = _player.GetById(article.Player.Id);
+			if (article.Team != null)
+				model.Team = _team.GetById(article.Team.Id);
+
 			return View(model);
+		}
+
+		public async Task<IActionResult> Delete(int id)
+		{
+			var article = _articles.GetById(id);
+			if (_singInManager.IsSignedIn(User))
+			{
+				var user = await _userManager.GetUserAsync(User);
+				if (article.User.Id != user.Id)
+				{
+					if (!CheckAdminRights())
+					{
+						Redirect("/");
+					}
+				}
+			}
+			else Redirect("/");
+
+			_db.Articles.Remove(article);
+			await _db.SaveChangesAsync();
+			return RedirectToAction("MyArticles", "Article");
+		}
+
+		public bool CheckAdminRights()
+		{
+			return User.IsInRole("Admin");
 		}
 
 		private string GetUniqueFileName(string fileName)

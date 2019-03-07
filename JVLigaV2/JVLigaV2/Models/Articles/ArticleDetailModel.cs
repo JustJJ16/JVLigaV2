@@ -1,4 +1,6 @@
-﻿namespace JVLigaV2.Models.Articles
+﻿using JVLigaV2.LeagueData.Models;
+
+namespace JVLigaV2.Models.Articles
 {
 	public class ArticleDetailModel
 	{
@@ -6,5 +8,8 @@
 		public string Description { get; set; }
 		public string Body { get; set; }
 		public string ImgSrc { get; set; }
+		public LeagueData.Models.Team Team { get; set; }
+		public LeagueData.Models.Match Match { get; set; }
+		public Player Player { get; set; }
 	}
 }

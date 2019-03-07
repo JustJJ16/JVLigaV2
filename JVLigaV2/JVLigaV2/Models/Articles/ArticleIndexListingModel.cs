@@ -1,4 +1,6 @@
-﻿namespace JVLigaV2.Models.Articles
+﻿using System;
+
+namespace JVLigaV2.Models.Articles
 {
 	public class ArticleIndexListingModel
 	{
@@ -6,5 +8,6 @@
 		public string Title { get; set; }
 		public string Desrciption { get; set; }
 		public string ImagePath { get; set; }
+		public DateTime PublishedDate { get; set; }
 	}
 }

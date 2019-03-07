@@ -16,7 +16,7 @@
 		<form asp-action="HallManagement">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="HallName" ></label>
+				<label asp-for="HallName"></label>
 				<input asp-for="HallName" class="form-control" />
 				<span asp-validation-for="HallName" class="text-danger"></span>
 			</div>
@@ -26,32 +26,36 @@
 		</form>
 	</div>
 	<div class="col-lg-2 ml-lg-4">
-	<table class="table table-light table-sm">
-		<thead class="thead-dark">
-			<tr>
-				<th>
-					Název
-				</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var hall in Model.Halls)
-			{
+		<table class="table table-light table-sm">
+			<thead class="thead-dark">
 				<tr>
-					<td>
-						@hall.Name
-					</td>
-					<td>
-						@if (User.IsInRole("Admin"))
-						{
-
-							<a asp-action="DeleteHall" asp-controller="Admin" asp-route-id="@hall.Id">Smazat</a>
-						}
-					</td>
+					<th>
+						Název
+					</th>
+					<th></th>
 				</tr>
-			}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				@foreach (var hall in Model.Halls)
+				{
+					<tr>
+						<td>
+							@hall.Name
+						</td>
+						<td>
+							@if (User.IsInRole("Admin"))
+							{
+
+								<a asp-action="DeleteHall" asp-controller="Admin" asp-route-id="@hall.Id">Smazat</a>
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
-</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

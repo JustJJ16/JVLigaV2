@@ -2,7 +2,7 @@
 @model JVLigaV2.Models.Admin.PlayerManagementModel
 
 @{
-    ViewData["Title"] = "Správa hráčů";
+	ViewData["Title"] = "Správa hráčů";
 }
 
 <div class="row">
@@ -30,48 +30,52 @@
 	<div class="col-lg-5">
 		<table class="table table-light table-sm">
 			<thead class="thead-dark">
-			<tr>
-				<th>
-					Jméno
-				</th>
-				<th>
-					Příjmení
-				</th>
-				<th>
-					Tým
-				</th>
-				<th></th>
-			</tr>
+				<tr>
+					<th>
+						Jméno
+					</th>
+					<th>
+						Příjmení
+					</th>
+					<th>
+						Tým
+					</th>
+					<th></th>
+				</tr>
 			</thead>
 			<tbody>
-			@if (Model.Players != null)
-			{
-				foreach (var player in Model.Players)
+				@if (Model.Players != null)
 				{
-					<tr>
-						<td>
-							@player.FirstName
-						</td>
-						<td>
-							@player.LastName
-						</td>
-						<td>
-							@player.Team.Name
-						</td>
-						<td>
-							@if (User.IsInRole("Admin"))
-							{
+					foreach (var player in Model.Players)
+					{
+						<tr>
+							<td>
+								@player.FirstName
+							</td>
+							<td>
+								@player.LastName
+							</td>
+							<td>
+								@player.Team.Name
+							</td>
+							<td>
+								@if (User.IsInRole("Admin"))
+								{
 
-								<a asp-action="DeletePlayer" asp-controller="Admin" asp-route-id="@player.Id">Smazat</a>
-								@Html.Raw("|")
-								;
-								<a asp-action="PlayerChange" asp-controller="Admin" asp-route-id="@player.Id">Změnit tým</a>
-							}
-						</td>
-					</tr>
+									<a asp-action="DeletePlayer" asp-controller="Admin" asp-route-id="@player.Id">Smazat</a>
+									@Html.Raw("|")
+									;
+									<a asp-action="PlayerChange" asp-controller="Admin" asp-route-id="@player.Id">Změnit tým</a>
+								}
+							</td>
+						</tr>
+					}
 				}
-			}
 			</tbody>
 		</table>
 	</div>
 </div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
