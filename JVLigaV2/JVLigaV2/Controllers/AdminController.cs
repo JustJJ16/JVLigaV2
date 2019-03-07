@@ -123,7 +123,18 @@ namespace JVLigaV2.Controllers
 		{
 			if (!CheckAdminRights())
 				return Redirect("/");
-			ViewBag.SeasonGenerated = string.Empty;
+			var teamList = _team.GetAll();
+			var teams = new List<SelectListItem> { new SelectListItem() };
+			foreach (var team in teamList)
+			{
+				var item = new SelectListItem
+				{
+					Value = team.Id.ToString(),
+					Text = team.Name
+				};
+				teams.Add(item);
+			}
+			ViewBag.Teams = teams;
 			SeasonManagementModel model = new SeasonManagementModel {Years = _seasons.GetAvailableSeasons()};
 			return View(model);
 		}
