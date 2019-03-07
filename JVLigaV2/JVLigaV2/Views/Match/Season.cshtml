@@ -40,18 +40,18 @@
 					</td>
 					<td style="color: @(match.Winner ? "green" : "black")">
 
-						<a asp-action="Detail" asp-route-id="@match.HomeTeam.Id">@match.HomeTeam.Name</a>
+						<a asp-action="Detail" asp-controller="Team" asp-route-id="@match.HomeTeam.Id">@match.HomeTeam.Name</a>
 					</td>
 					<td style="color: @(!match.Winner ? "green" : "black")">
-						<a asp-action="Detail" asp-route-id="@match.GuestTeam.Id">@match.GuestTeam.Name</a>
+						<a asp-action="Detail" asp-controller="Team" asp-route-id="@match.GuestTeam.Id">@match.GuestTeam.Name</a>
 					</td>
 					<td>
 						@if (User.IsInRole("Admin"))
 						{
 
-							<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a>
+							<a asp-action="Edit" asp-controller="Match" asp-route-id="@match.Id">Zadat výsledky</a>
 							@Html.Raw("|")
-							<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
+							<a asp-action="Change" asp-controller="Match" asp-route-id="@match.Id">Změnit datum</a>
 
 						}
 					</td>
@@ -64,18 +64,18 @@
 						@match.Date.ToString("dd. MM. yyy H:mm")
 					</td>
 					<td>
-						<a asp-action="Detail" asp-route-id="@match.HomeTeam.Id">@match.HomeTeam.Name</a>
+						<a asp-action="Detail" asp-controller="Team" asp-route-id="@match.HomeTeam.Id">@match.HomeTeam.Name</a>
 					</td>
 					<td>
-						<a asp-action="Detail" asp-route-id="@match.GuestTeam.Id">@match.GuestTeam.Name</a>
+						<a asp-action="Detail" asp-controller="Team" asp-route-id="@match.GuestTeam.Id">@match.GuestTeam.Name</a>
 </td>
 					<td>
 						@if (User.IsInRole("Admin"))
 						{
 
-							<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a>
+							<a asp-action="Edit" asp-controller="Match" asp-route-id="@match.Id">Zadat výsledky</a>
 							@Html.Raw("|")
-							<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
+							<a asp-action="Change" asp-controller="Match" asp-route-id="@match.Id">Změnit datum</a>
 
 						}
 					</td>

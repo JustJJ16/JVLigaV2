@@ -2,22 +2,12 @@
 
 
 @{
-	ViewData["Title"] = "Detail";
+	ViewData["Title"] = Model.Title;
 }
 
-<div class="row">
+<div class="col-lg-11">
+	<img class="img-fluid" src="@Html.Raw(Model.ImgSrc)" />
 	<h1 style="color: dodgerblue">@Model.Title</h1>
-</div>
-<div class="row">
 	<h5>@Model.Description</h5>
+	<p>@Html.Raw(Model.Body)</p>
 </div>
-<div class="row">
-	<div class="col col-lg-6">
-		<p>@Html.Raw(Model.Body)</p>
-	</div>
-	<div class="col">
-
-	</div>
-</div>
-
-

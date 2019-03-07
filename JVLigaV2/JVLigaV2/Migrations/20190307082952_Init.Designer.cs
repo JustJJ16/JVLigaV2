@@ -10,18 +10,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JVLigaV2.Migrations
 {
     [DbContext(typeof(LeagueContext))]
-    [Migration("20190123112206_FilePath")]
-    partial class FilePath
+    [Migration("20190307082952_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LeagueData.Models.ApplicationUser", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -46,7 +46,7 @@ namespace JVLigaV2.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("PlayerId");
+                    b.Property<int?>("PlayerId");
 
                     b.Property<string>("SecurityStamp");
 
@@ -60,7 +60,7 @@ namespace JVLigaV2.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Article", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Article", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace JVLigaV2.Migrations
 
                     b.Property<int?>("MatchId");
 
-                    b.Property<string>("PlayerId");
+                    b.Property<int?>("PlayerId");
 
                     b.Property<DateTime>("PublishedDate");
 
@@ -104,7 +104,7 @@ namespace JVLigaV2.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Hall", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Hall", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,7 +119,7 @@ namespace JVLigaV2.Migrations
                     b.ToTable("Halls");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Match", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Match", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,16 +142,17 @@ namespace JVLigaV2.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Player", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Player", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("SecondName")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50);
 
@@ -164,7 +165,7 @@ namespace JVLigaV2.Migrations
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Result", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Result", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -185,7 +186,7 @@ namespace JVLigaV2.Migrations
                     b.ToTable("Results");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Team", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Team", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -314,62 +315,62 @@ namespace JVLigaV2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.ApplicationUser", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("LeagueData.Models.Player", "Player")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Player", "Player")
                         .WithMany()
                         .HasForeignKey("PlayerId");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Article", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Article", b =>
                 {
-                    b.HasOne("LeagueData.Models.Match", "Match")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Match", "Match")
                         .WithMany()
                         .HasForeignKey("MatchId");
 
-                    b.HasOne("LeagueData.Models.Player", "Player")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Player", "Player")
                         .WithMany()
                         .HasForeignKey("PlayerId");
 
-                    b.HasOne("LeagueData.Models.Team", "Team")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId");
 
-                    b.HasOne("LeagueData.Models.ApplicationUser", "User")
+                    b.HasOne("JVLigaV2.LeagueData.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Match", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Match", b =>
                 {
-                    b.HasOne("LeagueData.Models.Team", "GuestTeam")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Team", "GuestTeam")
                         .WithMany()
                         .HasForeignKey("GuestTeamId");
 
-                    b.HasOne("LeagueData.Models.Team", "HomeTeam")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Team", "HomeTeam")
                         .WithMany()
                         .HasForeignKey("HomeTeamId");
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Player", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Player", b =>
                 {
-                    b.HasOne("LeagueData.Models.Team", "Team")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Result", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Result", b =>
                 {
-                    b.HasOne("LeagueData.Models.Match", "Match")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Match", "Match")
                         .WithMany()
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("LeagueData.Models.Team", b =>
+            modelBuilder.Entity("JVLigaV2.LeagueData.Models.Team", b =>
                 {
-                    b.HasOne("LeagueData.Models.Hall", "Hall")
+                    b.HasOne("JVLigaV2.LeagueData.Models.Hall", "Hall")
                         .WithMany()
                         .HasForeignKey("HallId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -385,7 +386,7 @@ namespace JVLigaV2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("LeagueData.Models.ApplicationUser")
+                    b.HasOne("JVLigaV2.LeagueData.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -393,7 +394,7 @@ namespace JVLigaV2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("LeagueData.Models.ApplicationUser")
+                    b.HasOne("JVLigaV2.LeagueData.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -406,7 +407,7 @@ namespace JVLigaV2.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LeagueData.Models.ApplicationUser")
+                    b.HasOne("JVLigaV2.LeagueData.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -414,7 +415,7 @@ namespace JVLigaV2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("LeagueData.Models.ApplicationUser")
+                    b.HasOne("JVLigaV2.LeagueData.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

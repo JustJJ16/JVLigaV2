@@ -66,22 +66,7 @@ namespace JVLigaV2.Controllers
 				_db.Add(team);
 				_db.SaveChanges();
 
-				ViewBag.TeamCreated = "Tým vytvořen";
-
-				var hallList = _halls.GetAll().ToList();
-				var halls = new List<SelectListItem>();
-				foreach (var hall in hallList)
-				{
-					var item = new SelectListItem
-					{
-						Value = hall.Id.ToString(),
-						Text = hall.Name
-					};
-					halls.Add(item);
-				}
-				ViewBag.Halls = halls;
-				var model = new TeamManagementModel {Teams = _team.GetAll()};
-				return View(model);
+				return RedirectToAction("TeamManagement", "Admin");
 			}
 
 			return Redirect("/");
@@ -92,7 +77,7 @@ namespace JVLigaV2.Controllers
 			Team team = _team.GetById(id);
 			_db.Teams.Remove(team);
 			await _db.SaveChangesAsync();
-			return Redirect("/Admin/TeamManagement");
+			return RedirectToAction("TeamManagement", "Admin");
 		}
 
 		public IActionResult HallManagement()
@@ -115,7 +100,7 @@ namespace JVLigaV2.Controllers
 				_db.SaveChanges();
 				ViewBag.HallCreated = "Hala přidána";
 				model.Halls = _halls.GetAll();
-				return View(model);
+				return RedirectToAction("HallManagement", "Admin");
 			}
 
 			return Redirect("/");
@@ -125,7 +110,7 @@ namespace JVLigaV2.Controllers
 		{
 			_db.Halls.Remove(_halls.GetById(id));
 			await _db.SaveChangesAsync();
-			return Redirect("/Admin/HallManagement");
+			return RedirectToAction("HallManagement", "Admin"); ;
 
 		}
 
@@ -150,9 +135,7 @@ namespace JVLigaV2.Controllers
 			}
 
 			_seasons.GenerateSeason(model.Year);
-			ViewBag.SeasonGenerated = "Sezóna vytvořena";
-			model.Years = _seasons.GetAvailableSeasons();
-			return View(model);
+			return RedirectToAction("SeasonManagement", "Admin");
 
 		}
 
@@ -201,9 +184,9 @@ namespace JVLigaV2.Controllers
 			return RedirectToAction("PlayerManagement", "Admin");
 		}
 
-		public IActionResult PlayerChange(string id)
+		public IActionResult PlayerChange(int id)
 		{
-			var model = new PlayerChangeModel {Player = _player.GetById(id)};
+			var model = new PlayerChangeModel { Player = _player.GetById(id) };
 			var teamList = _team.GetAll().ToList();
 			var teams = new List<SelectListItem>();
 			foreach (var team in teamList)
@@ -220,13 +203,21 @@ namespace JVLigaV2.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> PlayerChange(PlayerChangeModel model, string id)
+		public async Task<IActionResult> PlayerChange(PlayerChangeModel model, int id)
 		{
 			if (!ModelState.IsValid) return Redirect("/");
 
 			var player = _player.GetById(id);
 			player.Team = _team.GetById(model.TeamId);
 			_db.Update(player);
+			await _db.SaveChangesAsync();
+			return RedirectToAction("PlayerManagement", "Admin");
+		}
+
+		public async Task<IActionResult> PlayerDelete(int id)
+		{
+			if (!CheckAdminRights()) return Redirect("/");
+			_db.Players.Remove(_player.GetById(id));
 			await _db.SaveChangesAsync();
 			return RedirectToAction("PlayerManagement", "Admin");
 		}

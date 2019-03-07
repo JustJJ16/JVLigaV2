@@ -29,7 +29,7 @@ namespace JVLigaV2.LeagueData.Services
 				.Include(p => p.Team.Hall);
 		}
 
-		public Player GetById(string id)
+		public Player GetById(int id)
 		{
 			return _context.Players
 				.Include(p => p.Team)

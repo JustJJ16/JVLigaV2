@@ -108,9 +108,10 @@ namespace JVLigaV2.Migrations
                 name: "Players",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
-                    SecondName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
                     TeamId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -162,7 +163,7 @@ namespace JVLigaV2.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    PlayerId = table.Column<string>(nullable: true)
+                    PlayerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -184,11 +185,11 @@ namespace JVLigaV2.Migrations
                     Title = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(maxLength: 1000, nullable: false),
                     Body = table.Column<string>(maxLength: 20000, nullable: false),
-                    ArticleImage = table.Column<byte[]>(nullable: false),
+                    ImagePath = table.Column<string>(nullable: false),
                     PublishedDate = table.Column<DateTime>(nullable: false),
                     MatchId = table.Column<int>(nullable: true),
                     TeamId = table.Column<int>(nullable: true),
-                    PlayerId = table.Column<string>(nullable: true),
+                    PlayerId = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

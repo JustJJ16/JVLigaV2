@@ -5,7 +5,7 @@ namespace JVLigaV2.LeagueData.Models
 	public class Player
 	{
 		[Key]
-		public string Id { get; set; }
+		public int Id { get; set; }
 		[Required]
 		[MaxLength(50)]
 		public string FirstName { get; set; }

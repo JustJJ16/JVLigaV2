@@ -126,7 +126,8 @@ namespace JVLigaV2.Controllers
 			ArticleDetailModel model = new ArticleDetailModel(){
 				Title = article.Title,
 				Description = article.Description,
-				Body = article.Body
+				Body = article.Body,
+				ImgSrc = article.ImagePath
 			};
 
 			return View(model);

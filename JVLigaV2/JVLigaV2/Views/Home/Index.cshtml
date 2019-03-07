@@ -16,7 +16,7 @@
 							<img src="@Html.Raw(Model.Articles.ToArray()[0].ImagePath)" class="img-fluid mx-auto d-block" style="width: 100%"/>
 						</div>
 						<div class="carousel-caption" role="option">
-							<p>
+							<p class="strokeme">
 								@Model.Articles.ToArray()[0].Title
 							</p>
 							<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[0].Id">
@@ -29,7 +29,7 @@
 							<img src=@Html.Raw(Model.Articles.ToArray()[1].ImagePath) class="img-fluid mx-auto d-block" style="width: 100%" />
 						</div>
 						<div class="carousel-caption" role="option">
-							<p>
+							<p class="strokeme">
 								@Model.Articles.ToArray()[1].Title
 							</p>
 							<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[1].Id">
@@ -42,7 +42,7 @@
 							<img src=@Html.Raw(Model.Articles.ToArray()[2].ImagePath) class="img-fluid mx-auto d-block" style="width: 100%" />
 						</div>
 						<div class="carousel-caption" role="option">
-							<p>
+							<p class="strokeme">
 								@Model.Articles.ToArray()[2].Title
 							</p>
 							<a class="btn btn-secondary btn-sm" asp-controller="Article" asp-action="Detail" asp-route-id="@Model.Articles.ToArray()[2].Id">
