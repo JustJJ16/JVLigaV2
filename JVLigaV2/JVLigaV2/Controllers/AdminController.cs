@@ -7,6 +7,7 @@ using JVLigaV2.LeagueData.Models;
 using JVLigaV2.LeagueData.Services;
 using JVLigaV2.Models.Admin;
 using JVLigaV2.Models.Halls;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -21,8 +22,10 @@ namespace JVLigaV2.Controllers
 		private readonly TeamService _team;
 		private readonly MatchService _match;
 		private readonly PlayerService _player;
+		private readonly UserService _user;
+		private readonly UserManager<ApplicationUser> _userManager;
 
-		public AdminController(HallService halls, SeasonService seasons, TeamService team, MatchService match, PlayerService player, LeagueContext db)
+		public AdminController(UserManager<ApplicationUser>  userManager, UserService user, HallService halls, SeasonService seasons, TeamService team, MatchService match, PlayerService player, LeagueContext db)
 		{
 			_halls = halls;
 			_seasons = seasons;
@@ -30,6 +33,8 @@ namespace JVLigaV2.Controllers
 			_db = db;
 			_match = match;
 			_player = player;
+			_user = user;
+			_userManager = userManager;
 		}
 		public IActionResult TeamManagement()
 		{
@@ -143,9 +148,17 @@ namespace JVLigaV2.Controllers
 		{
 			if (!CheckAdminRights())
 				return Redirect("/");
-			IEnumerable<Match> matches = _match.GetMatchesBySeason(year);
+			var matches = _match.GetMatchesBySeason(year);
 			_db.Matches.RemoveRange(matches);
-			await _db.SaveChangesAsync();
+			try
+			{
+				await _db.SaveChangesAsync();
+			}
+			catch (Exception)
+			{
+				throw new Exception("Je možné, že jsou k zápasům přidány články. Požádejte o zrušení správce systému.");
+			}
+
 			return RedirectToAction("SeasonManagement","Admin");
 		}
 
@@ -220,6 +233,45 @@ namespace JVLigaV2.Controllers
 			_db.Players.Remove(_player.GetById(id));
 			await _db.SaveChangesAsync();
 			return RedirectToAction("PlayerManagement", "Admin");
+		}
+
+
+		public IActionResult UserManagement()
+		{
+			if (!CheckAdminRights()) return Redirect("/");
+			var model = new UserManagementModel();
+			model.Users = _user.GetAllUsers();
+			return View(model);
+		}
+
+		public async Task<IActionResult> ChangeEditor(string id)
+		{
+			if (!CheckAdminRights()) return Redirect("/");
+			ApplicationUser user = _user.GetById(id);
+			if (await _userManager.IsInRoleAsync(user, "Editor"))
+			{
+				await _userManager.RemoveFromRoleAsync(user, "Editor");
+			}
+			else
+			{
+				await _userManager.AddToRoleAsync(user, "Editor");
+			}
+
+			return RedirectToAction("UserManagement", "Admin");
+		}
+
+		public async Task<IActionResult> DeleteUser(string id)
+		{
+			if (!CheckAdminRights()) return Redirect("/");
+			try
+			{
+				await _userManager.DeleteAsync(_user.GetById(id));
+			}
+			catch (Exception)
+			{
+				throw new Exception("Uživatel je vázaný na jiné záznamy");
+			}
+			return RedirectToAction("UserManagement", "Admin");
 		}
 
 		public bool CheckAdminRights()

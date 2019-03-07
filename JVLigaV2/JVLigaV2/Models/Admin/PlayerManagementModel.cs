@@ -18,7 +18,7 @@ namespace JVLigaV2.Models.Admin
 		[Required]
 		[Display(Name = "Tým")]
 		public int TeamId { get; set; }
-		public IEnumerable<Player> Players { get; set; }
+		public IEnumerable<LeagueData.Models.Player> Players { get; set; }
 
 	}
 }

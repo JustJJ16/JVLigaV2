@@ -17,7 +17,7 @@
 	<p>@Html.Raw(Model.Body)</p>
 	<p>@if (Model.Match != null || Model.Player != null || Model.Team != null)
 	   {
-		   @Html.Raw("Vztahuje se k:")
+		   @Html.Raw("Vztahuje se k: ")
 	   }@if (Model.Player != null){<a asp-action="Detail" asp-controller="Player" asp-route-id="@Model.Player.Id">@Html.Raw(Model.Player.FirstName + " " + Model.Player.LastName)</a>}
 		@if (Model.Match != null) {<a asp-action="Detail" asp-controller="Match" asp-route-id="@Model.Match.Id">@Html.Raw(Model.Match.HomeTeam.Name + "-" + Model.Match.GuestTeam.Name + ", " + Model.Match.Date.ToString("dd.MM.yyy H:mm"))</a>} 
 		@if (Model.Team != null){<a asp-action="Detail" asp-controller="Team" asp-route-id="@Model.Team.Id">@Html.Raw(Model.Team.Name)</a>}</p>

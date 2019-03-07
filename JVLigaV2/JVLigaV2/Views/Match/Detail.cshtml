@@ -26,6 +26,18 @@
 				</div>
 				<div class="col-lg-2 text-center">
 					<h1>-</h1>
+					@if (Model.Match.Date < DateTime.Now.AddMinutes(15))
+					{
+						<strong>Výsledky:</strong>
+						foreach (var result in Model.Results)
+						 {
+							 <div class="row">
+								 <div class="col-lg-12 text-center">
+								 	<span>@Html.Raw(result.Set + ". set: " + result.HomeTeamPoints + "-" + result.GuestTeamPoints)</span>
+								 </div>
+							 </div>
+						 }
+					}
 				</div>
 				<div class="col-lg-5 text-right">
 					<div class="row">

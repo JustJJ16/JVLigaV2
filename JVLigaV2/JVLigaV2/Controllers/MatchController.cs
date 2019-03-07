@@ -90,12 +90,13 @@ namespace JVLigaV2.Controllers
 				GuestTeam = match.GuestTeam,
 				Id = match.Id
 			};
+			var results = _result.GetResultsForMatch(id).ToList();
 			MatchEditModel model = new MatchEditModel()
 			{
 				MatchWithTeams = strMatch,
 				Match = match,
-				Title = strMatch.HomeTeam + " - " + strMatch.GuestTeam + ", " + strMatch.Date,
-				Results = new[] { new Result(){Set = 1}, new Result() { Set = 2}, new Result() { Set = 3} },
+				Title = strMatch.HomeTeam.Name + " - " + strMatch.GuestTeam.Name + ", " + strMatch.Date,
+				Results = results
 
 			};
 			return View(model);
@@ -104,6 +105,7 @@ namespace JVLigaV2.Controllers
 		[HttpPost]
 		public IActionResult Edit(MatchEditModel model)
 		{
+			if (!ModelState.IsValid) return Redirect("/");
 			int homeP = 0;
 			int guestP = 0;
 			Match match = _match.GetById(model.Match.Id);
@@ -114,9 +116,12 @@ namespace JVLigaV2.Controllers
 				if (result.GuestTeamPoints < result.HomeTeamPoints)
 					homeP++;
 
-				result.Match = match;
 
-				_result.Add(result);
+				result.Match = match;
+				var resultR = _result.GetResultBySetAndMatch(result.Set, result.Match.Id);
+				resultR.GuestTeamPoints = result.GuestTeamPoints;
+				resultR.HomeTeamPoints = result.HomeTeamPoints;
+				_result.UpdateResult(resultR);
 			}
 			match.Winner = homeP > guestP;
 			try
@@ -128,20 +133,27 @@ namespace JVLigaV2.Controllers
 				Console.WriteLine(e);
 				throw;
 			}
-			var strMatch = new MatchIndexListingModel()
-			{
-				Date = match.Date,
-				HomeTeam = match.HomeTeam,
-				GuestTeam = match.GuestTeam,
-				Id = match.Id
-			};
-			model.MatchWithTeams = strMatch;
-			model.Title = strMatch.HomeTeam + " - " + strMatch.GuestTeam + ", " + strMatch.Date;
+			return RedirectToAction("Edit","Match");
+		}
 
-			ViewBag.Succeed = "Výsledky zadány.";
-
+		public IActionResult Change(int id)
+		{
+			var model = new MatchChangeModel();
+			model.Match = _match.GetById(id);
+			model.NewDateTime = _match.GetById(id).Date;
 			return View(model);
 		}
+		[HttpPost]
+		public IActionResult Change(MatchChangeModel model)
+		{
+			if (!ModelState.IsValid) Redirect("/");
+			var match = _match.GetById(model.Match.Id);
+			match.Date = model.NewDateTime;
+			_db.Entry(match).State = EntityState.Modified;
+			_db.SaveChanges();
+			return RedirectToAction("Season", "Match", new {year = DateTime.Now.Year});
+		}
+
 
 		public IActionResult Detail(int id)
 		{
@@ -149,6 +161,7 @@ namespace JVLigaV2.Controllers
 			model.Match = _match.GetById(id);
 			model.HomeTeamPlayers = _player.GetPlayersForTeam(model.Match.HomeTeam);
 			model.GuestTeamPlayers = _player.GetPlayersForTeam(model.Match.GuestTeam);
+			model.Results = _result.GetResultsForMatch(model.Match.Id);
 			return View(model);
 		}
 	}

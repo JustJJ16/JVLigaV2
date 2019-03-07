@@ -10,6 +10,6 @@ namespace JVLigaV2.Models.Articles
 		public string ImgSrc { get; set; }
 		public LeagueData.Models.Team Team { get; set; }
 		public LeagueData.Models.Match Match { get; set; }
-		public Player Player { get; set; }
+		public LeagueData.Models.Player Player { get; set; }
 	}
 }

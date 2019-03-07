@@ -1,4 +1,5 @@
-﻿@model JVLigaV2.Models.Match.MatchEditModel
+﻿@using JVLigaV2.LeagueData.Models
+@model JVLigaV2.Models.Match.MatchEditModel
 
 @{
 	ViewData["Title"] = Model.Title;
@@ -7,62 +8,110 @@
 <h2>@Model.Title</h2>
 <hr />
 <div class="row">
-	<div class="col-sm">
-		<p>Domácí: </p><h3><b>@Model.MatchWithTeams.HomeTeam</b></h3>
-		<p>Hosté: </p><h3><b>@Model.MatchWithTeams.GuestTeam</b></h3>
+	<div class="col-lg-6">
+		<p>Domácí: </p><h3><b>@Model.MatchWithTeams.HomeTeam.Name</b></h3>
+		<p>Hosté: </p><h3><b>@Model.MatchWithTeams.GuestTeam.Name</b></h3>
 		<p>Datum:</p><h3><b>@Model.MatchWithTeams.Date</b></h3>
 	</div>
-<div class="col-sm">
+	
+<div class="col-lg-6">
+		
 	<form asp-action="Edit">
 		<input type="hidden" asp-for="Match.Id" />
+		@for(int i = 0 ; i < Model.Results.Count() ; i++)
+		{
+			<input type="hidden" asp-for="@Model.Results[i].Id" />
+			<div class="row mb-lg-3">
+				<div class="col-lg-3">
+					@if (Model.Results[i] == Model.Results.FirstOrDefault())
+					{
+						<label asp-for="@Model.Results[i].Set"></label>
+					}
+					<input asp-for="@Model.Results[i].Set" class="form-control" />
+					<span asp-validation-for="@Model.Results[i].Set" class="text-danger"></span>
+				</div>
+				<div class="col-lg-3">
+					@if (Model.Results[i] == Model.Results.FirstOrDefault()){<label asp-for="@Model.Results[i].HomeTeamPoints"></label>}
+					<input asp-for="@Model.Results[i].HomeTeamPoints" class="form-control" />
+					<span asp-validation-for="@Model.Results[i].HomeTeamPoints" class="text-danger"></span>
+				</div>
+				<div class="col-lg-3">
+					@if (Model.Results[i] == Model.Results.FirstOrDefault()){<label asp-for="@Model.Results[i].GuestTeamPoints"></label>}
+					<input asp-for="@Model.Results[i].GuestTeamPoints" class="form-control" />
+					<span asp-validation-for="@Model.Results[i].GuestTeamPoints" class="text-danger"></span>
+				</div>
+			</div>
+		}
 		<div class="row">
-			<div class="col-sm-3">
+			<div class="col-lg-12">
+				<div class="form-group">
+					<input type="submit" value="Zadat výlsedky" class="btn btn-light" />
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
+
+	
+
+	@*<div class="col-lg-6">
+	<form asp-action="Edit">
+		<input type="hidden" asp-for="Match.Id" />
+		<div class="row mb-lg-3">
+			<div class="col-lg-3">
 				<label asp-for="Results[0].Set"></label>
 				<input asp-for="Results[0].Set" class="form-control" />
 				<span asp-validation-for="Results[0].Set" class="text-danger"></span>
 			</div>
-			<div class="col-sm-3">
+			<div class="col-lg-3">
 				<label asp-for="Results[0].HomeTeamPoints"></label>
 				<input asp-for="Results[0].HomeTeamPoints" class="form-control" />
 				<span asp-validation-for="Results[0].HomeTeamPoints" class="text-danger"></span>
 			</div>
-			<div class="col-sm-3">
+			<div class="col-lg-3">
 				<label asp-for="Results[0].GuestTeamPoints"></label>
 				<input asp-for="Results[0].GuestTeamPoints" class="form-control" />
 				<span asp-validation-for="Results[0].GuestTeamPoints" class="text-danger"></span>
 			</div>
 		</div>
-		<div class="row">
-				<div class="col-sm-3">
+		<div class="row mb-lg-3">
+				<div class="col-lg-3">
 					<input asp-for="Results[1].Set" class="form-control"/>
 					<span asp-validation-for="Results[1].Set" class="text-danger"></span>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-lg-3">
 					<input asp-for="Results[1].HomeTeamPoints" class="form-control"/>
 					<span asp-validation-for="Results[1].HomeTeamPoints" class="text-danger"></span>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-lg-3">
 					<input asp-for="Results[1].GuestTeamPoints" class="form-control"/>
 					<span asp-validation-for="Results[1].GuestTeamPoints" class="text-danger"></span>
 				</div>
 		</div>
-		<div class="row">
-				<div class="col-sm-3">
-					<input asp-for="Results[2].Set" class="form-control"/>
-					<span asp-validation-for="Results[2].Set" class="text-danger"></span>
-				</div>
-				<div class="col-sm-3">
-					<input asp-for="Results[2].HomeTeamPoints" class="form-control"/>
-					<span asp-validation-for="Results[2].HomeTeamPoints" class="text-danger"></span>
-				</div>
-				<div class="col-sm-3">
-					<input asp-for="Results[2].GuestTeamPoints" class="form-control"/>
-					<span asp-validation-for="Results[2].GuestTeamPoints" class="text-danger"></span>
-				</div>
+		<div class="row mb-lg-3">
+			<div class="col-lg-3">
+				<input asp-for="Results[2].Set" class="form-control"/>
+				<span asp-validation-for="Results[2].Set" class="text-danger"></span>
+			</div>
+			<div class="col-lg-3">
+				<input asp-for="Results[2].HomeTeamPoints" class="form-control"/>
+				<span asp-validation-for="Results[2].HomeTeamPoints" class="text-danger"></span>
+			</div>
+			<div class="col-lg-3">
+				<input asp-for="Results[2].GuestTeamPoints" class="form-control"/>
+				<span asp-validation-for="Results[2].GuestTeamPoints" class="text-danger"></span>
+			</div>
 		</div>
-		<div class="col-md-4">
-			<div class="form-group">
-				<input type="submit" value="Save" class="btn btn-light" />
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="form-group">
+					<input type="submit" value="Zadat výlsedky" class="btn btn-light" />
+				</div>
 			</div>
 			@if (ViewBag.Succeed != null)
 			{
@@ -71,4 +120,4 @@
 		</div>
 	</form>
 </div>
-</div>
+</div>*@

@@ -1,0 +1,21 @@
+﻿
+@model JVLigaV2.Models.Player.PlayerDetailModel
+
+@{
+	ViewData["Title"] = Model.Player.FirstName + " " + Model.Player.LastName;
+}
+
+<div calss="row">
+	<div class="col-lg-4 mx-auto">
+		<div class="row text-center">
+			<div class="col-lg-12">
+				<h1>@Html.Raw(Model.Player.FirstName + " " + Model.Player.LastName)</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 ml-lg-5">
+				<strong>Současný tým: </strong>@Html.Raw(Model.Player.Team.Name)
+			</div>
+		</div>
+	</div>
+</div>

@@ -65,9 +65,9 @@
 						@if (User.IsInRole("Admin"))
 						{
 
-							<a asp-action="Edit" asp-route-id="@match.Id">Zadat výsledky</a>
+							<a asp-action="Edit" asp-controller="Match" asp-route-id="@match.Id">Zadat výsledky</a>
 							@Html.Raw("|")
-							<a asp-action="Change" asp-route-id="@match.Id">Změnit datum</a>
+							<a asp-action="Change" asp-controller="Match" asp-route-id="@match.Id">Změnit datum</a>
 
 						}
 					</td>

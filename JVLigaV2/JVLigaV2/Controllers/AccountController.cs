@@ -76,12 +76,12 @@ namespace JVLigaV2.Controllers
 				{
 					_logger.LogInformation("User created a new account with password.");
 
-					if (users != null)
+					if (users.Count() == 1)
 					{
 						IdentityRole adminRole = new IdentityRole();
 						adminRole.Name = "Admin";
 						await _roleManager.CreateAsync(adminRole);
-						var result1 = await _userManager.AddToRoleAsync(user, "Admin");
+						 await _userManager.AddToRoleAsync(user, "Admin");
 
 						IdentityRole editorRole = new IdentityRole();
 						editorRole.Name = "Editor";

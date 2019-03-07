@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using JVLigaV2.LeagueData.Models;
 using Nager.Date;
 
@@ -82,7 +83,15 @@ namespace JVLigaV2.LeagueData.Services
 							Date = availableDates[j],
 							GuestTeam = teams[guestTeamIndex],
 							HomeTeam = teams[teamIndex]
-						};
+						}; for (int r = 0; r < 3; r++)
+						{
+							Result result = new Result();
+							result.GuestTeamPoints = 0;
+							result.HomeTeamPoints = 0;
+							result.Set = r + 1;
+							result.Match = m;
+							_context.Add(result);
+						}
 						_context.Add(m);
 						TeamIndexUp(ref guestTeamIndex, teams.Count);
 						TeamIndexUp(ref teamIndex, teams.Count);
@@ -105,6 +114,15 @@ namespace JVLigaV2.LeagueData.Services
 							GuestTeam = teams[guestTeamIndex],
 							HomeTeam = teams[teamIndex]
 						};
+						for (int r = 0; r < 3; r++)
+						{
+							Result result = new Result();
+							result.GuestTeamPoints = 0;
+							result.HomeTeamPoints = 0;
+							result.Set = r + 1;
+							result.Match = m;
+							_context.Add(result);
+						}
 						_context.Add(m);
 						TeamIndexUp(ref guestTeamIndex, teams.Count);
 						TeamIndexUp(ref teamIndex, teams.Count);
@@ -120,6 +138,16 @@ namespace JVLigaV2.LeagueData.Services
 					TeamIndexUp(ref guestTeamIndex, teams.Count);
 				}
 			}
+
+			//for (int i = 0; i < 3; i++)
+			//{
+			//	Result result = new Result();
+			//	result.GuestTeamPoints = 0;
+			//	result.HomeTeamPoints = 0;
+			//	result.Set = i + 1;
+			//	result.Match = j;
+			//	_context.Results.Add(result);
+			//}
 
 			_context.SaveChanges();
 		}

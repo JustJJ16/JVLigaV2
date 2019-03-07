@@ -49,6 +49,7 @@ namespace JVLigaV2
 			services.AddScoped<SeasonService>();
 			services.AddScoped<TeamService>();
 			services.AddScoped<PlayerService>();
+			services.AddScoped<UserService>();
 
 			services.Configure<IdentityOptions>(options =>
 			{

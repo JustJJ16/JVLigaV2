@@ -9,7 +9,7 @@ namespace JVLigaV2.Models.Admin
 {
 	public class PlayerChangeModel
 	{
-		public Player Player { get; set; }
+		public LeagueData.Models.Player Player { get; set; }
 		[Required]
 		[Display(Name = "Tým")]
 		public int TeamId { get; set; }

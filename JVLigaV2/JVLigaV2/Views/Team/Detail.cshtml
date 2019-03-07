@@ -3,22 +3,35 @@
 @{
 	ViewData["Title"] = @Model.Team.Name;
 }
-<div class="col-lg-12 mx-auto">
+<div class="col-lg-12 text-center mx-auto">
 	<div clas="row">
-		<div class="col-lg-8">
-				<h3>@Model.Team.Name</h3>
-				<p>Hala: @Model.Team.Hall.Name</p>
-				<h6>Soupiska:</h6>
-				@if (Model.Players != null)
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<h3>@Model.Team.Name</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<strong>@Html.Raw("Hala: ")</strong>@Model.Team.Hall.Name
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<strong>Soupiska: </strong>
+				</div>
+			</div>
+			@if (Model.Players != null)
 			{
 				foreach (var player in Model.Players)
 				{
-				@Html.Raw(player.FirstName + " " + player.LastName)
+					<div class="row">
+						<div class="col-lg-12">
+							@Html.Raw(player.FirstName + " " + player.LastName)
+						</div>
+					</div>
 				}
 			}
 		</div>
-		<div class="col-lg-4">
-			@await Component.InvokeAsync("Standings")
+			</div>
 		</div>
-	</div>
-</div>

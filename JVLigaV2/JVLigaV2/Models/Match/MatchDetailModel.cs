@@ -9,8 +9,8 @@ namespace JVLigaV2.Models.Match
 	public class MatchDetailModel
 	{
 		public LeagueData.Models.Match Match { get; set; }
-		public IEnumerable<Player> HomeTeamPlayers { get; set; }
-		public IEnumerable<Player> GuestTeamPlayers { get; set; }
-
+		public IEnumerable<LeagueData.Models.Player> HomeTeamPlayers { get; set; }
+		public IEnumerable<LeagueData.Models.Player> GuestTeamPlayers { get; set; }
+		public IEnumerable<Result> Results { get; set; }
 	}
 }
