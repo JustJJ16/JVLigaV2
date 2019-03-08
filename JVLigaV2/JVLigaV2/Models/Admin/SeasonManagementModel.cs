@@ -8,6 +8,8 @@ namespace JVLigaV2.Models.Admin
 		[Required(ErrorMessage = "Zadejte rok sezóny.")]
 		[Display(Name = "Rok sezóny")]
 		public int Year { get; set; }
+		[Required]
+		public List<int> TeamIds { get; set; }
 		public IEnumerable<int> Years { get; set; }
 	}
 }

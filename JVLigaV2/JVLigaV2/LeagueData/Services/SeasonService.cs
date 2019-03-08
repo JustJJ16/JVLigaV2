@@ -32,10 +32,9 @@ namespace JVLigaV2.LeagueData.Services
 			
 		}
 
-		public void GenerateSeason(int year)
+		public void GenerateSeason(int year, List<Team> teams)
 		{
 			List<DateTime> availableDates = new List<DateTime>();
-			List<Team> teams = _context.Teams.ToList();
 			//Ziskani vikendu (dostupnych dnu) pro zapasy
 			for (DateTime date = new DateTime(year, 1, 1); date <= new DateTime(year, 12, 31); date = date.AddDays(1))
 			{

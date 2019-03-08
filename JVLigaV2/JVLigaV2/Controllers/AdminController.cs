@@ -143,14 +143,18 @@ namespace JVLigaV2.Controllers
 		public IActionResult SeasonManagement(SeasonManagementModel model)
 		{
 			if (!ModelState.IsValid) return Redirect("/");
-			var teams = _db.Teams;
-			if (teams.Count() != 14)
+
+			var teams = new List<Team>();
+			foreach(var teamId in model.TeamIds)
 			{
-				ModelState.AddModelError("Year", "Počet týmů v lize musí být 14!");
-				return View(model);
+				teams.Add(_team.GetById(teamId));
 			}
 
-			_seasons.GenerateSeason(model.Year);
+			teams = teams.Distinct().ToList();
+			if(teams.Count != 14)
+				return RedirectToAction("SeasonManagement", "Admin");
+
+			_seasons.GenerateSeason(model.Year, teams);
 			return RedirectToAction("SeasonManagement", "Admin");
 
 		}
